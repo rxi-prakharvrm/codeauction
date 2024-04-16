@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <h1>hello team <%=team %> welcome!</h1>
+    
+    <input id="input" type="text">
+    <button id="btn"> send</button>
+    <div class="currentBidding">
+
+    </div>
+    <div class="timer">
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const input= document.getElementById('input')
+        const button= document.getElementById('btn')
+        const timer=document.querySelector('.timer')
+        button.addEventListener('click',()=>{
+            const txt=input.value
+            socket.emit(`<%=team %>`,txt)
+        })
+
+        socket.on('question',(message)=>{
+            var sec=5;
+            const currbid=  document.querySelector('.currentBidding')
+            currbid.innerHTML=`<h2>${message}</h2>`
+            timer.innerHTML=`<p>${sec--}</p>`
+            
+            const intervalId = setInterval(() => {
+            timer.innerHTML=`<p>${sec}</p>`
+            sec-=1;
+            }, 1000);
+           setTimeout(() => {
+            clearInterval(intervalId)
+            currbid.innerHTML=`Time is up`
+           }, 5000);
+        })
+        
+      </script> 
+</body>     
+</html>

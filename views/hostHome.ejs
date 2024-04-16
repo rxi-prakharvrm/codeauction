@@ -1,0 +1,29 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <label for="input">enter question number: </label>
+        <input id="input" type="text">
+        <button id="btn"> send</button>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+            const input= document.getElementById('input')
+            const button= document.getElementById('btn')
+            button.addEventListener('click',()=>{
+                const txt=input.value
+                socket.emit(`host`,txt)
+            })
+
+            socket.on('sending',(message)=>{
+                console.log(message);
+            })
+            
+        </script> 
+    </body>     
+    </html>
