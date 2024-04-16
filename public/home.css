@@ -1,0 +1,16 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.currentBidding{
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    position: relative;
+    bottom: 0;
+}
+.timer{
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgb(110, 103, 103);
+}
