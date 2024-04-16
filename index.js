@@ -9,29 +9,48 @@ const io = new Server(server)
 io.setMaxListeners(0); // Set maximum listeners to unlimited
 
 
-const {userData,hostData,questionBank}=require('./mongodb')
-const {authenticateUser} = require('./logic/authenticateUser')
-const {authenticateHost} = require('./logic/authenticateHost')
-const {validUsername} = require('./logic/validUsername')
+const {userData,hostData,questionBank}=require('./src/mongodb')
+const {authenticateUser} = require('./src/logic/authenticateUser')
+const {authenticateHost} = require('./src/logic/authenticateHost')
+const {validUsername} = require('./src/logic/validUsername')
 
 app.set('view engine','ejs')
 app.use(express.urlencoded({extended:false}))
 app.use(express.static('./public'))
 
+var bidData={username:null,amount:0};
+
 io.on('connection',(socket)=>{
     socket.on('host',async (message)=>{
+        bidData.username=null
+        bidData.amount=0
         var idx=Number(message)
         var question= await questionBank.findOne({index:idx})
         var statement='wait';
         if(question!=null) statement=question.statement
         console.log(statement);
+
         socket.broadcast.emit('question',statement);
+    })
+
+    socket.on('bid',(username,amount)=>{
+        if(Number(amount)>bidData.amount){
+            bidData.username=username;
+            bidData.amount=amount
+            console.log(bidData)
+            io.emit('currBidData',bidData.username,bidData.amount);
+        }
     })
 })
 
 
+
 app.get('/',(req,res)=>{
-    res.render('login')
+    res.sendFile(__dirname+'/public/login.html')
+})
+
+app.get('/admin',(req,res)=>{
+    res.render('hostLogin')
 })
 
 app.get('/homenew', (req, res) => {
@@ -40,7 +59,7 @@ app.get('/homenew', (req, res) => {
 })
 
 app.get('/signUp',(req,res)=>{
-    res.render('signUp')
+    res.sendFile(__dirname+'/public/signUp.html')
 })
 app.post('/signUp', async (req,res)=>{
     const data={
@@ -103,6 +122,3 @@ server.listen(3000,()=>{
     
     console.log("app started at port 3000");
 })
-
-
-

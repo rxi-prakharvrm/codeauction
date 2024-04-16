@@ -24,25 +24,31 @@
         const input= document.getElementById('input')
         const button= document.getElementById('btn')
         const timer=document.querySelector('.timer')
+        
         button.addEventListener('click',()=>{
-            const txt=input.value
-            socket.emit(`<%=userData.teamCode %>`,txt)
+            const amount=input.value
+            socket.emit(`bid`,'<%=userData.username %>',amount)
+        })
+
+        socket.on('currBidData',(username,amount)=>{
+            timer.innerHTML=`a:${amount} u:${username}`;
         })
 
         socket.on('question',(message)=>{
-            var sec=5;
+            // var sec=5;
             const currbid=  document.querySelector('.currentBidding')
             currbid.innerHTML=`<h2>${message}</h2>`
-            timer.innerHTML=`<p>${sec--}</p>`
+        
+            // timer.innerHTML=`<p>${sec--}</p>`
             
-            const intervalId = setInterval(() => {
-            timer.innerHTML=`<p>${sec}</p>`
-            sec-=1;
-            }, 1000);
-           setTimeout(() => {
-            clearInterval(intervalId)
-            currbid.innerHTML=`Time is up`
-           }, 5000);
+            // const intervalId = setInterval(() => {
+            // timer.innerHTML=`<p>${sec}</p>`
+            // sec-=1;
+            // }, 1000);
+        //    setTimeout(() => {
+        //     // clearInterval(intervalId)
+        //     currbid.innerHTML=`Time is up`
+        //    }, 5000);
         })
         
       </script> 
