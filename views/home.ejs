@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <h1>hello team <%=team %> welcome!</h1>
+    <h1>hello team <%=userData.teamCode %> welcome!</h1>
     
     <input id="input" type="text">
     <button id="btn"> send</button>
@@ -26,7 +26,7 @@
         const timer=document.querySelector('.timer')
         button.addEventListener('click',()=>{
             const txt=input.value
-            socket.emit(`<%=team %>`,txt)
+            socket.emit(`<%=userData.teamCode %>`,txt)
         })
 
         socket.on('question',(message)=>{

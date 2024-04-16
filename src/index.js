@@ -10,12 +10,24 @@ io.setMaxListeners(0); // Set maximum listeners to unlimited
 
 
 const {userData,hostData,questionBank}=require('./mongodb')
+const {authenticateUser} = require('./logic/authenticateUser')
+const {authenticateHost} = require('./logic/authenticateHost')
+const {validUsername} = require('./logic/validUsername')
 
-var tempUsers=[{name:'vikrant',roll:21},{name:'rahul',roll:22}];
 app.set('view engine','ejs')
 app.use(express.urlencoded({extended:false}))
 app.use(express.static('./public'))
 
+io.on('connection',(socket)=>{
+    socket.on('host',async (message)=>{
+        var idx=Number(message)
+        var question= await questionBank.findOne({index:idx})
+        var statement='wait';
+        if(question!=null) statement=question.statement
+        console.log(statement);
+        socket.broadcast.emit('question',statement);
+    })
+})
 
 
 app.get('/',(req,res)=>{
@@ -28,48 +40,35 @@ app.get('/signUp',(req,res)=>{
 app.post('/signUp', async (req,res)=>{
     const data={
         teamCode:req.body.teamCode,
-        name:req.body.username,
+        username:req.body.username,
         password:req.body.password,
         institution:req.body.institution
     }
 
-    try{
-        const check= await userData.findOne({name:data.name});
-        if(check){
-            res.send("username taken")
-        }
-        else{
-
-            await userData.insertMany([data])
-            res.send("submitted")
-        }
+    const check = await validUsername(data)
+    if(check.success){
+        await userData.insertMany([data])
+        res.send('<h2>Data Submitted</h2>')
     }
-    catch{
-        res.send("wrong details")
+    else{
+        res.send(check.message)
     }
     
 })
 
 app.post('/login', async (req,res)=>{
-    const data={
-        name:req.body.username,
+    const userData={
+        teamCode:req.body.teamCode,
+        username:req.body.username,
         password:req.body.password
     }
-    try{
-        const check=await userData.findOne({name:data.name})
-        if(check.password===data.password){
-            const usersData=await userData.find()
-            io.on('connection',(socket)=>{
-                socket.join(`${check.teamCode}`)
-            })
-            res.render('home',{team:`${check.teamCode}`,users:usersData})
-        }
-        else{
-            res.send("wrong password")
-        }
+    const authResult= await authenticateUser(userData);
+
+    if(authResult.success){
+        res.render('home',{userData:userData})
     }
-    catch{
-        res.send("wrong details")
+    else{
+        res.send(authResult.message)
     }
 })
 
@@ -77,41 +76,23 @@ app.get('/hostLogin',(req,res)=>{
     res.render('./hostLogin')
 })
 app.post('/hostLogin',async(req,res)=>{
-    const data = {
-        name : req.body.username,
+    const hostData = {
+        username : req.body.username,
         password : req.body.password
     }
-    console.log(data.name,data.password);
-    try{
-        const check=await hostData.findOne({username:data.name})
-        console.log(check)
-        if(check.password===data.password){
-            io.on('connection',(socket)=>{
-                socket.join(`host`)
-            })
-            res.render('hostHome')
-        }
-        else{
-            res.send("wrong password")
-        }
+    const authResult=await authenticateHost(hostData)
+    if(authResult.success){
+        res.render('hostHome',{userData:hostData})
     }
-    catch{
-        res.send("wrong details")
+    else{
+        res.send(authResult.message)
     }
+    
 
 })
 
 
-io.on('connection',(socket)=>{
-    socket.on('host',async (message)=>{
-        var idx=Number(message)
-        var question= await questionBank.findOne({index:idx})
-        var statement='wait';
-        if(question!=null) statement=question.statement
-        console.log(statement);
-        socket.broadcast.emit('question',statement);
-    })
-})
+
 
 server.listen(3000,()=>{
     
