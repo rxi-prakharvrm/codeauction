@@ -34,6 +34,11 @@ app.get('/',(req,res)=>{
     res.render('login')
 })
 
+app.get('/homenew', (req, res) => {
+    let teamId = "Abc1023";
+    res.render('homenew', {teamId});
+})
+
 app.get('/signUp',(req,res)=>{
     res.render('signUp')
 })
