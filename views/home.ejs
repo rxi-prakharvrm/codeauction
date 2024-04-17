@@ -61,7 +61,7 @@
                         <div class="bidding-info-upper-half-ctr">
                             <div class="remaining-time-ctr">
                                 <h3 class="remaining-time-header">Remaining Time</h3>
-                                <div class="remaining-time-clock">00:<%= teamData.remainingTime %>s</div>
+                                <div class="remaining-time-clock">00:<span class="timer"></span>s</div>
                             </div>
                             <div class="curr-bid-ctr">
                                 <h3 class="curr-bid-header">Current Bid</h3>
@@ -99,11 +99,33 @@
         const points = document.querySelector('.problem-in-bid-points');
         const title = document.querySelector('.problem-in-bid-title');
         const desc = document.querySelector('.problem-desc');
+        const timer = document.querySelector('.timer');
 
         socket.on("question", (titleServer,descServer,pointsServer) => {
             title.innerHTML=titleServer
             points.innerHTML=pointsServer
             desc.innerHTML=descServer
+
+            function startCountdown() {
+                let countdown = 59;
+                timer.innerHTML = countdown;
+
+                let timer = setInterval(() => {
+                    countdown--;
+                    timer.innerHTML = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(timer);
+                        console.log("Time's up!");
+                        timer.innerHTML = "00";
+
+                        // socket.emit("timer", ())
+                    }
+                }, 1000);
+            }
+
+            startCountdown();
+
         })
     </script>
 </body>
