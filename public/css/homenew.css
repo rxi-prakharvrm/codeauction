@@ -18,6 +18,7 @@ body {
   font-size: 1.6rem;
   /* overflow: hidden; */
   overflow-x: hidden;
+  background: linear-gradient(to right, #2b4162, #041046, #2b4162);
 }
 
 .header {
@@ -92,7 +93,6 @@ body {
     height: 100%;
     padding: 5rem 0;
     /* height: calc(100vh - 12rem); */
-    background: linear-gradient(to right, #2b4162, #041046, #2b4162);
 }
 
 .inner-hero-section {

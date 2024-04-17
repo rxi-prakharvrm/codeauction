@@ -43,8 +43,6 @@ io.on('connection',(socket)=>{
     })
 })
 
-
-
 app.get('/',(req,res)=>{
     res.sendFile(__dirname+'/public/login.html')
 })
@@ -53,26 +51,10 @@ app.get('/admin',(req,res)=>{
     res.render('hostLogin')
 })
 
-app.get('/homenew', (req, res) => {
-    let teamId = "Abc1023";
-    let remainingTime = 59;
-    let currBidAmount = 6;
-    let problemPoints = 4;
-    let problemTitle = "Find minimum in rotated sorted array";
-    let problemDesc = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
-    res.render('homenew', {
-        teamId,
-        remainingTime,
-        currBidAmount,
-        problemPoints,
-        problemTitle,
-        problemDesc
-    });
-})
-
 app.get('/signUp',(req,res)=>{
     res.sendFile(__dirname+'/public/signUp.html')
 })
+
 app.post('/signUp', async (req,res)=>{
     const data={
         teamCode:req.body.teamCode,
@@ -98,10 +80,21 @@ app.post('/login', async (req,res)=>{
         username:req.body.username,
         password:req.body.password
     }
+
+    const teamData = {
+        totalPoints: 20,
+        purse: 12,
+        teamId: "Abc1023",
+        remainingTime: 59,
+        currBidAmount: 6,
+        problemPoints: 4,
+        problemTitle: "Find minimum in rotated sorted array",
+        problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
+    }
     const authResult= await authenticateUser(userData);
 
     if(authResult.success){
-        res.render('home',{userData:userData})
+        res.render('homenew',{userData:userData})
     }
     else{
         res.send(authResult.message)
@@ -111,6 +104,7 @@ app.post('/login', async (req,res)=>{
 app.get('/hostLogin',(req,res)=>{
     res.render('./hostLogin')
 })
+
 app.post('/hostLogin',async(req,res)=>{
     const hostData = {
         username : req.body.username,
