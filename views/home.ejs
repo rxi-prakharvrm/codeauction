@@ -14,7 +14,7 @@
         <div class="header-team-ctr">
           <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
           <div class="team-logo">T</div>
-          <span class="team-id"> <%= teamCode %> </span>
+          <span class="team-id"> <%= userData.teamCode %> </span>
         </div>
         <h2 class="code-auction-logo">Code Auction</h2>
         <div class="points-ctr">
@@ -139,16 +139,22 @@
       });
 
       const inputBidBtn = document.querySelector(".bid-btn");
-      const currBidAmount =
-        document.querySelector(".curr-bid-amount").innerHTML;
-
+      const currBidAmount =document.querySelector(".curr-bid-amount")
+      const inputBidAmount = document.querySelector(".bid-amount")
       inputBidBtn.addEventListener("click", () => {
-        const inputBidAmount = document.querySelector(".bid-amount").value;
-        socket.emit("bid", (teamCode, inputBidAmount));
+        var curr=currBidAmount.innerHTML
+        var inputBid=inputBidAmount.value;
+        
+        if(Number(inputBid)>Number(curr)){
+            console.log('going to emit new bid');
+            console.log('<%=userData.teamCode %>');
+            socket.emit('bid','<%=userData.teamCode %>', inputBid);
+        }
       });
 
-      socket.on("currBidData", (newTeamCode, newBidAmount) => {
-        currBidAmount = newBidAmount;
+      socket.on('currBidData', (newTeamCode, newBidAmount) => {
+        console.log("new value coming");
+        currBidAmount.innerHTML = newBidAmount;
       });
     </script>
   </body>

@@ -49,7 +49,6 @@ io.on('connection', (socket) => {
         if (Number(amount) > bidData.amount) {
             bidData.teamCode = teamCode;
             bidData.amount = amount
-            console.log(bidData)
             io.emit('currBidData', bidData.teamCode, bidData.amount);
         }
     })
