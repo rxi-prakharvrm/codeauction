@@ -21,7 +21,7 @@
             const update_btn = document.getElementById('update-btn')
             //send the current question to sockets
             sendBtn.addEventListener('click',()=>{
-                // sendBtn.disabled = true;
+                sendBtn.disabled = true;
                 const txt=input.value
                 socket.emit(`host`,txt)
             })
@@ -36,9 +36,9 @@
                 socket.emit(`update-user-data`,txt)
             })
 
-            // socket.on("timeIsUp", () => {
-            //     sendBtn.disabled = false;
-            // })
+            socket.on("timeIsUp", () => {
+                sendBtn.disabled = false;
+            })
 
             // socket.on('sending',(message)=>{
             //     console.log(message);
