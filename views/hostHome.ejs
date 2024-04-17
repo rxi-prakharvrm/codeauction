@@ -15,10 +15,12 @@
         <script>
             const socket = io();
             const input= document.getElementById('input')
+
             const send_btn = document.getElementById('send-btn')
             const update_btn = document.getElementById('update-btn')
             //send the current question to sockets
             send_btn.addEventListener('click',()=>{
+
                 const txt=input.value
                 socket.emit(`host`,txt)
             })
