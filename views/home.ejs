@@ -16,7 +16,7 @@
                 <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
                 <div class="team-logo">T</div>
                 <span class="team-id">
-                    <%= userData.teamCode %>
+                    <%= teamCode %>
                 </span>
             </div>
             <h2 class="code-auction-logo">Code Auction</h2>
@@ -80,13 +80,13 @@
                     <h2 class="problem-in-bid-header">Problem in bidding</h2>
                     <div class="problem-in-bid-inner-ctr">
                         <p class="problem-in-bid-points"></p>
-                        <h2 class="problem-in-bid-title">Waiting for problem</h2>
+                        <h2 class="problem-in-bid-title">Waiting for problem...</h2>
                     </div>
                 </div>
                 <div class="problem-desc-outer-ctr">
                     <h2 class="problem-desc-header">Problem Description</h2>
                     <div class="problem-desc-inner-ctr">
-                        <p class="problem-desc">description</p>
+                        <p class="problem-desc">No problem in bid</p>
                         <div class="problem-desc-bottom-overlay"></div>
                     </div>
                 </div>
@@ -118,9 +118,9 @@
                         clearInterval(countDownTimer);
                         console.log("Time's up!");
                         timer.innerHTML = "00";
-                        title.innerHTML = "Waiting for problem";
+                        title.innerHTML = "Waiting for problem...";
                         points.innerHTML = null;
-                        desc.innerHTML 
+                        desc.innerHTML = "No problem in bid"
                         
 
                         // socket.emit("timer", ())

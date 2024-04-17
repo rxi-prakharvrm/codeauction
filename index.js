@@ -31,9 +31,9 @@ io.on('connection',(socket)=>{
 
         
         var question= await questionBank.findOne({index:idx})
-        var title='Waiting for problem';
+        var title='Waiting for problem...';
         var points=null
-        var desc="Waiting for problem"
+        var desc="No problem in bid"
         if(question!=null) {
             title=question.statement
             points=question.points
