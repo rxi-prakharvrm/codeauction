@@ -13,7 +13,7 @@ html{
 
 body{
     background: linear-gradient(to right,#2B4162,#041046,#2B4162);
-    font-family: "Outfit";
+    font-family: "Outfit", sans-serif;
     font-size: 1.6rem;
 }
 .main{

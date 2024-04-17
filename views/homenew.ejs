@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="<%= locals.description %>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= locals.title %></title>
+    <title>HOME - CODE AUCTION</title>
     <link rel="stylesheet" href="./css/homenew.css">
 </head>
 <body>
@@ -17,18 +16,18 @@
                 <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
                 <div class="team-logo">T</div>
                 <span class="team-id">
-                    <%= teamId %>
+                    <%= userData.teamcode %>
                 </span>
             </div>
             <h2 class="code-auction-logo">Code Auction</h2>
             <div class="points-ctr">
                 <div class="total-ctr">
                     <div class="total-title">Total</div>
-                    <span class="total-points">20</span>
+                    <span class="total-points"><%= teamData.totalPoints %></span>
                 </div>
                 <div class="purse-ctr">
                     <div class="purse-title">Purse</div>
-                    <span class="purse-points">12</span>
+                    <span class="purse-points"><%= teamData.purse %></span>
                 </div>
             </div>
         </div>
@@ -61,11 +60,11 @@
                     <div class="bidding-info-inner-ctr">
                         <div class="remaining-time-ctr">
                             <h3 class="remaining-time-header">Remaining Time</h3>
-                            <div class="remaining-time-clock">00:<%= remainingTime %>s</div>
+                            <div class="remaining-time-clock">00:<%= userData.remainingTime %>s</div>
                         </div>
                         <div class="curr-bid-ctr">
                             <h3 class="curr-bid-header">Current Bid</h3>
-                            <div class="curr-bid-amount"><%= currBidAmount %></div>
+                            <div class="curr-bid-amount"><%= userData.currBidAmount %></div>
                         </div>
                     </div>                    
                 </div>
@@ -74,14 +73,14 @@
                 <div class="problem-in-bid-outer-ctr">
                     <h2 class="problem-in-bid-header">Problem in bidding</h2>
                     <div class="problem-in-bid-inner-ctr">
-                        <p class="problem-in-bid-points"><%= problemPoints %></p>
-                        <h2 class="problem-in-bid-title"><%= problemTitle %></h2>
+                        <p class="problem-in-bid-points"><%= userData.problemPoints %></p>
+                        <h2 class="problem-in-bid-title"><%= userData.problemTitle %></h2>
                     </div>
                 </div>
                 <div class="problem-desc-outer-ctr">
                     <h2 class="problem-desc-header">Problem Description</h2>
                     <div class="problem-desc-inner-ctr">
-                        <p class="problem-desc"><%= problemDesc %></p>
+                        <p class="problem-desc"><%= userData.problemDesc %></p>
                         <div class="problem-desc-bottom-overlay"></div>
                     </div>
                 </div>
