@@ -1,136 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HOME - CODE AUCTION</title>
-    <link rel="stylesheet" href="./css/home.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="./css/home.css" />
+  </head>
+  <body>
     <!-- Header  -->
 
     <div class="header">
-        <div class="inner-header">
-            <div class="header-team-ctr">
-                <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
-                <div class="team-logo">T</div>
-                <span class="team-id">
-                    <%= userData.teamCode %>
-                </span>
-            </div>
-            <h2 class="code-auction-logo">Code Auction</h2>
-            <div class="points-ctr">
-                <div class="total-ctr">
-                    <div class="total-title">Total</div>
-                    <span class="total-points"><%= teamData.totalPoints %></span>
-                </div>
-                <div class="purse-ctr">
-                    <div class="purse-title">Purse</div>
-                    <span class="purse-points"><%= teamData.purse %></span>
-                </div>
-            </div>
+      <div class="inner-header">
+        <div class="header-team-ctr">
+          <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
+          <div class="team-logo">T</div>
+          <span class="team-id"> <%= teamCode %> </span>
         </div>
+        <h2 class="code-auction-logo">Code Auction</h2>
+        <div class="points-ctr">
+          <div class="total-ctr">
+            <div class="total-title">Total</div>
+            <span class="total-points"><%= teamData.totalPoints %></span>
+          </div>
+          <div class="purse-ctr">
+            <div class="purse-title">Purse</div>
+            <span class="purse-points"><%= teamData.purse %></span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Hero Section  -->
 
     <div class="hero-section">
-        <div class="inner-hero-section">
-            <div class="hero-upper-half-ctr">
-                <div class="selected-problems-outer-ctr">
-                    <h2 class="selected-problems-header">Selected Problems</h2>
-                    <div class="selected-problems-inner-ctr">
-                        <div class="selected-problem-ctr">
-                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
-                        </div>
-                        <div class="selected-problem-ctr">
-                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
-                        </div>
-                        <div class="selected-problem-ctr">
-                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
-                        </div>
-                        <div class="selected-problem-ctr">
-                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bidding-info-outer-ctr">
-                    <h2 class="bidding-info-header">Bidding Info</h2>
-                    <div class="bidding-info-inner-ctr">
-                        <div class="bidding-info-upper-half-ctr">
-                            <div class="remaining-time-ctr">
-                                <h3 class="remaining-time-header">Remaining Time</h3>
-                                <div class="remaining-time-clock">00:<span class="timer"></span>s</div>
-                            </div>
-                            <div class="curr-bid-ctr">
-                                <h3 class="curr-bid-header">Current Bid</h3>
-                                <div class="curr-bid-amount"><%= teamData.currBidAmount %></div>
-                            </div>
-                        </div>
-                        <div class="bidding-info-lower-half-ctr">
-                            <input type="number" name="bid-amount" class="bid-amount" placeholder="Enter your bid amount">
-                            <input type="button" value="Bid" class="bid-btn">
-                        </div>
-                    </div>                    
-                </div>
+      <div class="inner-hero-section">
+        <div class="hero-upper-half-ctr">
+          <div class="selected-problems-outer-ctr">
+            <h2 class="selected-problems-header">Selected Problems</h2>
+            <div class="selected-problems-inner-ctr">
+              <div class="selected-problem-ctr">
+                <p class="selected-problem">Minimum Window Substring</p>
+                <span class="selected-problem-points">5</span>
+              </div>
+              <div class="selected-problem-ctr">
+                <p class="selected-problem">Minimum Window Substring</p>
+                <span class="selected-problem-points">5</span>
+              </div>
+              <div class="selected-problem-ctr">
+                <p class="selected-problem">Minimum Window Substring</p>
+                <span class="selected-problem-points">5</span>
+              </div>
+              <div class="selected-problem-ctr">
+                <p class="selected-problem">Minimum Window Substring</p>
+                <span class="selected-problem-points">5</span>
+              </div>
             </div>
-            <div class="hero-lower-half-ctr">
-                <div class="problem-in-bid-outer-ctr">
-                    <h2 class="problem-in-bid-header">Problem in bidding</h2>
-                    <div class="problem-in-bid-inner-ctr">
-                        <p class="problem-in-bid-points"></p>
-                        <h2 class="problem-in-bid-title">Waiting for problem</h2>
-                    </div>
+          </div>
+          <div class="bidding-info-outer-ctr">
+            <h2 class="bidding-info-header">Bidding Info</h2>
+            <div class="bidding-info-inner-ctr">
+              <div class="bidding-info-upper-half-ctr">
+                <div class="remaining-time-ctr">
+                  <h3 class="remaining-time-header">Remaining Time</h3>
+                  <div class="remaining-time-clock">
+                    00:<span class="timer"></span>s
+                  </div>
                 </div>
-                <div class="problem-desc-outer-ctr">
-                    <h2 class="problem-desc-header">Problem Description</h2>
-                    <div class="problem-desc-inner-ctr">
-                        <p class="problem-desc">description</p>
-                        <div class="problem-desc-bottom-overlay"></div>
-                    </div>
+                <div class="curr-bid-ctr">
+                  <h3 class="curr-bid-header">Current Bid</h3>
+                  <div class="curr-bid-amount">0</div>
                 </div>
+              </div>
+              <div class="bidding-info-lower-half-ctr">
+                <input
+                  type="number"
+                  name="bid-amount"
+                  class="bid-amount"
+                  placeholder="Enter your bid amount"
+                />
+                <input type="button" value="Bid" class="bid-btn" />
+              </div>
             </div>
+          </div>
         </div>
+        <div class="hero-lower-half-ctr">
+          <div class="problem-in-bid-outer-ctr">
+            <h2 class="problem-in-bid-header">Problem in bidding</h2>
+            <div class="problem-in-bid-inner-ctr">
+              <p class="problem-in-bid-points"></p>
+              <h2 class="problem-in-bid-title">Waiting for problem...</h2>
+            </div>
+          </div>
+          <div class="problem-desc-outer-ctr">
+            <h2 class="problem-desc-header">Problem Description</h2>
+            <div class="problem-desc-inner-ctr">
+              <p class="problem-desc">No problem in bid</p>
+              <div class="problem-desc-bottom-overlay"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
-        const points = document.querySelector('.problem-in-bid-points');
-        const title = document.querySelector('.problem-in-bid-title');
-        const desc = document.querySelector('.problem-desc');
-        const timer = document.querySelector('.timer');
+      const socket = io();
+      const points = document.querySelector(".problem-in-bid-points");
+      const title = document.querySelector(".problem-in-bid-title");
+      const desc = document.querySelector(".problem-desc");
+      const timer = document.querySelector(".timer");
 
-        socket.on("question", (titleServer,descServer,pointsServer) => {
-            title.innerHTML=titleServer
-            points.innerHTML=pointsServer
-            desc.innerHTML=descServer
+      socket.on("question", (titleServer, descServer, pointsServer) => {
+        title.innerHTML = titleServer;
+        points.innerHTML = pointsServer;
+        desc.innerHTML = descServer;
 
-            function startCountdown() {
-                let countdown = 59;
-                timer.innerHTML = countdown;
+        function startCountdown() {
+          let countdown = 59;
+          timer.innerHTML = countdown;
 
-                let countDownTimer = setInterval(() => {
-                    countdown--;
-                    timer.innerHTML = countdown;
+          let countDownTimer = setInterval(() => {
+            countdown--;
+            timer.innerHTML = countdown;
 
-                    if (countdown <= 0) {
-                        clearInterval(countDownTimer);
-                        console.log("Time's up!");
-                        timer.innerHTML = "00";
-                        title.innerHTML = "Waiting for problem";
-                        points.innerHTML = null;
-                        desc.innerHTML 
-                        
+            if (countdown <= 0) {
+              clearInterval(countDownTimer);
+              console.log("Time's up!");
+              timer.innerHTML = "00";
+              title.innerHTML = "Waiting for problem...";
+              points.innerHTML = null;
+              desc.innerHTML = "No problem in bid";
 
-                        // socket.emit("timer", ())
-                    }
-                }, 1000);
+              // socket.emit("timer", ())
             }
+          }, 1000);
+        }
 
-            startCountdown();
+        startCountdown();
+      });
 
-        })
+      const inputBidBtn = document.querySelector(".bid-btn");
+      const currBidAmount =
+        document.querySelector(".curr-bid-amount").innerHTML;
+
+      inputBidBtn.addEventListener("click", () => {
+        const inputBidAmount = document.querySelector(".bid-amount").value;
+        socket.emit("bid", (teamCode, inputBidAmount));
+      });
+
+      socket.on("currBidData", (newTeamCode, newBidAmount) => {
+        currBidAmount = newBidAmount;
+      });
     </script>
-</body>
+  </body>
 </html>

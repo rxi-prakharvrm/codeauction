@@ -1,115 +1,115 @@
 const express = require('express')
-const {createServer} = require('http')
-const app=express()
+const { createServer } = require('http')
+const app = express()
 
 const server = createServer(app);
-const {Server}= require('socket.io')
+const { Server } = require('socket.io')
 const io = new Server(server)
 
 io.setMaxListeners(0); // Set maximum listeners to unlimited
 
 
-const {userData,hostData,questionBank,teamData}=require('./src/mongodb')
-const {authenticateUser} = require('./src/logic/authenticateUser')
-const {authenticateHost} = require('./src/logic/authenticateHost')
-const {validUsername} = require('./src/logic/validUsername')
+const { userData, hostData, questionBank, teamData } = require('./src/mongodb')
+const { authenticateUser } = require('./src/logic/authenticateUser')
+const { authenticateHost } = require('./src/logic/authenticateHost')
+const { validUsername } = require('./src/logic/validUsername')
 
-app.set('view engine','ejs')
-app.use(express.urlencoded({extended:false}))
+app.set('view engine', 'ejs')
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static('./public'))
 
-var bidData={index:null,statement:"",username:null,amount:0};
+var bidData = { index: null, statement: "", teamCode: null, amount: 0 };
 
-io.on('connection',(socket)=>{
-    socket.on('host',async (index)=>{
-        
-        var idx=Number(index)
+io.on('connection', (socket) => {
+    socket.on('host', async (index) => {
 
-        bidData.index=idx
-        bidData.username=null
-        bidData.amount=0
+        var idx = Number(index)
 
-        
-        var question= await questionBank.findOne({index:idx})
-        var title='Waiting for problem';
-        var points=null
-        var desc="Waiting for problem"
-        if(question!=null) {
-            title=question.statement
-            points=question.points
-            desc=question.desc
-            bidData.statement=title
+        bidData.index = idx
+        bidData.teamCode = null
+        bidData.amount = 0
+
+
+        var question = await questionBank.findOne({ index: idx })
+        var title = 'Waiting for problem...';
+        var points = null
+        var desc = "No problem in bid"
+        if (question != null) {
+            title = question.statement
+            points = question.points
+            desc = question.desc
+            bidData.statement = title
         }
         console.log(title);
 
-        io.emit('question',title,desc,points);
+        io.emit('question', title, desc, points);
     })
 
-    socket.on('bid',(username,amount)=>{
-        if(Number(amount)>bidData.amount){
-            bidData.username=username;
-            bidData.amount=amount
+    socket.on('bid', (teamCode, amount) => {
+        if (Number(amount) > bidData.amount) {
+            bidData.teamCode = teamCode;
+            bidData.amount = amount
             console.log(bidData)
-            io.emit('currBidData',bidData.username,bidData.amount);
+            io.emit('currBidData', bidData.teamCode, bidData.amount);
         }
     })
 
-    socket.on('update-user-data',async()=>{
-        await questionBank.updateOne({index:bidData.index},{$set:{owner:bidData.username}})
-        try{
-            await teamData.findOne({teamCode:bidData.teamCode})
+    socket.on('update-user-data', async () => {
+        await questionBank.updateOne({ index: bidData.index }, { $set: { owner: bidData.username } })
+        try {
+            await teamData.findOne({ teamCode: bidData.teamCode })
 
-            if(teamData){
-                await teamData.updateOne({teamData:bidData.teamCode},{
-                    $set:{points:teamData.points-bidData.amount},
-                    $push:{questions:bidData.statement}
+            if (teamData) {
+                await teamData.updateOne({ teamData: bidData.teamCode }, {
+                    $set: { points: teamData.points - bidData.amount },
+                    $push: { questions: bidData.statement }
                 })
                 socket.emit('updateInfo')
             }
         }
-        catch(err){
+        catch (err) {
             console.log("server side error")
         }
-        
+
     })
 
 
 })
 
-app.get('/',(req,res)=>{
-    res.sendFile(__dirname+'/public/login.html')
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/login.html')
 })
 
-app.get('/admin',(req,res)=>{
+app.get('/admin', (req, res) => {
     res.render('hostLogin')
 })
 
-app.get('/signUp',(req,res)=>{
-    res.sendFile(__dirname+'/public/signUp.html')
+app.get('/signUp', (req, res) => {
+    res.sendFile(__dirname + '/public/signUp.html')
 })
 
-app.post('/signUp', async (req,res)=>{
-    const data={
-        teamCode:req.body.teamCode,
-        username:req.body.username,
-        password:req.body.password,
-        institution:req.body.institution
+app.post('/signUp', async (req, res) => {
+    const data = {
+        teamCode: req.body.teamCode,
+        username: req.body.username,
+        password: req.body.password,
+        institution: req.body.institution
     }
 
     const check = await validUsername(data)
-    if(check.success){
+    if (check.success) {
         await userData.insertMany([data])
         res.send('<h2>Data Submitted</h2>')
     }
-    else{
+    else {
         res.send(check.message)
     }
-    
+
 })
 
 let teamCode;
 
-app.post('/login', async (req,res)=>{
+app.post('/login', async (req, res) => {
     const userData = {
         teamCode: req.body.teamCode,
         username: req.body.username,
@@ -127,18 +127,18 @@ app.post('/login', async (req,res)=>{
         problemTitle: "Find minimum in rotated sorted array",
         problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
     }
-    
-    const authResult= await authenticateUser(userData);
 
-    if(authResult.success){
-        res.render('home',{userData:userData,teamData})
+    const authResult = await authenticateUser(userData);
+
+    if (authResult.success) {
+        res.render('home', { userData: userData, teamData })
     }
-    else{
+    else {
         res.send(authResult.message)
     }
 })
 
-app.get('/home', async(req, res) => {
+app.get('/home', async (req, res) => {
     const teamData = {
         totalPoints: 20,
         purse: 12,
@@ -155,20 +155,20 @@ app.get('/home', async(req, res) => {
     });
 })
 
-app.get('/hostLogin',(req,res)=>{
+app.get('/hostLogin', (req, res) => {
     res.render('./hostLogin')
 })
 
-app.post('/hostLogin',async(req,res)=>{
+app.post('/hostLogin', async (req, res) => {
     const hostData = {
-        username : req.body.username,
-        password : req.body.password
+        username: req.body.username,
+        password: req.body.password
     }
-    const authResult=await authenticateHost(hostData)
-    if(authResult.success){
-        res.render('hostHome',{userData:hostData})
+    const authResult = await authenticateHost(hostData)
+    if (authResult.success) {
+        res.render('hostHome', { userData: hostData })
     }
-    else{
+    else {
         res.send(authResult.message)
     }
 })
@@ -176,7 +176,7 @@ app.post('/hostLogin',async(req,res)=>{
 
 
 
-server.listen(3000,()=>{
-    
+server.listen(3000, () => {
+
     console.log("app started at port 3000");
 })
