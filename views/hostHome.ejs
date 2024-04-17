@@ -8,21 +8,30 @@
     <body>
         <label for="input">enter question number: </label>
         <input id="input" type="text">
-        <button id="btn"> send</button>
+        <button id="send-btn"> send</button>
+        <button id="update-btn">update bid info</button>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
             const socket = io();
             const input= document.getElementById('input')
-            const button= document.getElementById('btn')
-            button.addEventListener('click',()=>{
+            const send_btn = document.getElementById('send-btn')
+            const update_btn = document.getElementById('update-btn')
+            //send the current question to sockets
+            send_btn.addEventListener('click',()=>{
                 const txt=input.value
                 socket.emit(`host`,txt)
             })
 
-            socket.on('sending',(message)=>{
-                console.log(message);
+            //trigger to update points of sockets after current question
+            update_btn.addEventListener('click',()=>{
+                const txt=input.value
+                socket.emit(`update-user-data`,txt)
             })
+
+            // socket.on('sending',(message)=>{
+            //     console.log(message);
+            // })
             
         </script> 
     </body>     

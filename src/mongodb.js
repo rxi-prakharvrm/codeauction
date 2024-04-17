@@ -23,7 +23,7 @@ const user= new mongoose.Schema({
     },
     institution:{
         type:String
-    }
+    },
 })
 const host = new mongoose.Schema({
     username:{
@@ -38,13 +38,31 @@ const questions = new mongoose.Schema({
     index:{
         type:Number,
     },
+    owner:{
+        type:String,
+    },
     statement:{
         type:String
+    }
+})
+
+const teamdata=new mongoose.Schema({
+    team:{
+        teamCode:String
+    },
+    points:{
+        type:Number,
+        default:0
+    },
+    questions:{
+        type:[String],
+        default:[]
     }
 })
 
 const userData=new mongoose.model('userData',user)
 const hostData=new mongoose.model('hostData',host)
 const questionBank=new mongoose.model('questionBank',questions)
+const teamData=new mongoose.model('teamData',teamdata)
 
-module.exports={userData,hostData,questionBank}
+module.exports={userData,hostData,questionBank,teamData}

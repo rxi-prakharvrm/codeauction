@@ -9,7 +9,7 @@ const io = new Server(server)
 io.setMaxListeners(0); // Set maximum listeners to unlimited
 
 
-const {userData,hostData,questionBank}=require('./src/mongodb')
+const {userData,hostData,questionBank,teamData}=require('./src/mongodb')
 const {authenticateUser} = require('./src/logic/authenticateUser')
 const {authenticateHost} = require('./src/logic/authenticateHost')
 const {validUsername} = require('./src/logic/validUsername')
@@ -18,16 +18,24 @@ app.set('view engine','ejs')
 app.use(express.urlencoded({extended:false}))
 app.use(express.static('./public'))
 
-var bidData={username:null,amount:0};
+var bidData={index:null,statement:"",username:null,amount:0};
 
 io.on('connection',(socket)=>{
     socket.on('host',async (message)=>{
+        
+        var idx=Number(message)
+
+        bidData.index=idx
         bidData.username=null
         bidData.amount=0
-        var idx=Number(message)
+
+        
         var question= await questionBank.findOne({index:idx})
         var statement='wait';
-        if(question!=null) statement=question.statement
+        if(question!=null) {
+            statement=question.statement
+            bidData.statement=statement
+        }
         console.log(statement);
 
         socket.broadcast.emit('question',statement);
@@ -41,6 +49,27 @@ io.on('connection',(socket)=>{
             io.emit('currBidData',bidData.username,bidData.amount);
         }
     })
+
+    socket.on('update-user-data',async()=>{
+        await questionBank.updateOne({index:bidData.index},{$set:{owner:bidData.username}})
+        try{
+            await teamData.findOne({teamCode:bidData.teamCode})
+
+            if(teamData){
+                await teamData.updateOne({teamData:bidData.teamCode},{
+                    $set:{points:teamData.points-bidData.amount},
+                    $push:{questions:bidData.statement}
+                })
+                socket.emit('updateInfo')
+            }
+        }
+        catch(err){
+            console.log("server side error")
+        }
+        
+    })
+
+
 })
 
 app.get('/',(req,res)=>{
