@@ -16,7 +16,7 @@
                 <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
                 <div class="team-logo">T</div>
                 <span class="team-id">
-                    <%= teamCode %>
+                    <%= userData.teamCode %>
                 </span>
             </div>
             <h2 class="code-auction-logo">Code Auction</h2>
@@ -79,14 +79,14 @@
                 <div class="problem-in-bid-outer-ctr">
                     <h2 class="problem-in-bid-header">Problem in bidding</h2>
                     <div class="problem-in-bid-inner-ctr">
-                        <p class="problem-in-bid-points"><%= teamData.problemPoints %></p>
-                        <h2 class="problem-in-bid-title"><%= teamData.problemTitle %></h2>
+                        <p class="problem-in-bid-points"></p>
+                        <h2 class="problem-in-bid-title">Waiting for question</h2>
                     </div>
                 </div>
                 <div class="problem-desc-outer-ctr">
                     <h2 class="problem-desc-header">Problem Description</h2>
                     <div class="problem-desc-inner-ctr">
-                        <p class="problem-desc"><%= teamData.problemDesc %></p>
+                        <p class="problem-desc">description</p>
                         <div class="problem-desc-bottom-overlay"></div>
                     </div>
                 </div>
@@ -98,9 +98,12 @@
         const socket = io();
         const points = document.querySelector('.problem-in-bid-points');
         const title = document.querySelector('.problem-in-bid-title');
+        const desc = document.querySelector('.problem-desc');
 
-        socket.on("host", (message) => {
-            
+        socket.on("question", (titleServer,descServer,pointsServer) => {
+            title.innerHTML=titleServer
+            points.innerHTML=pointsServer
+            desc.innerHTML=descServer
         })
     </script>
 </body>

@@ -21,9 +21,9 @@ app.use(express.static('./public'))
 var bidData={index:null,statement:"",username:null,amount:0};
 
 io.on('connection',(socket)=>{
-    socket.on('host',async (message)=>{
+    socket.on('host',async (index)=>{
         
-        var idx=Number(message)
+        var idx=Number(index)
 
         bidData.index=idx
         bidData.username=null
@@ -31,14 +31,18 @@ io.on('connection',(socket)=>{
 
         
         var question= await questionBank.findOne({index:idx})
-        var statement='wait';
+        var title='Waiting for question';
+        var points=null
+        var desc="Waiting for question"
         if(question!=null) {
-            statement=question.statement
-            bidData.statement=statement
+            title=question.statement
+            points=question.points
+            desc=question.desc
+            bidData.statement=title
         }
-        console.log(statement);
+        console.log(title);
 
-        socket.broadcast.emit('question',statement);
+        io.emit('question',title,desc,points);
     })
 
     socket.on('bid',(username,amount)=>{
@@ -127,7 +131,7 @@ app.post('/login', async (req,res)=>{
     const authResult= await authenticateUser(userData);
 
     if(authResult.success){
-        res.render('homenew',{userData:userData,teamData})
+        res.render('home',{userData:userData,teamData})
     }
     else{
         res.send(authResult.message)
