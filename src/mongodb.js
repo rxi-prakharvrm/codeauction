@@ -43,6 +43,12 @@ const questions = new mongoose.Schema({
     },
     statement:{
         type:String
+    },
+    desc:{
+        type:String
+    },
+    points:{
+        type:Number
     }
 })
 
