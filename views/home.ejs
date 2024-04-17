@@ -122,6 +122,11 @@
             countdown--;
             timer.innerHTML = countdown;
 
+            socket.on("abort", () => {
+                countdown = 0;
+                clearInterval(countDownTimer);
+            })
+
             if (countdown <= 0) {
               clearInterval(countDownTimer);
               console.log("Time's up!");
@@ -130,7 +135,7 @@
               points.innerHTML = null;
               desc.innerHTML = "No problem in bid";
 
-              // socket.emit("timer", ())
+            //   socket.emit("timeUp");
             }
           }, 1000);
         }
@@ -139,20 +144,20 @@
       });
 
       const inputBidBtn = document.querySelector(".bid-btn");
-      const currBidAmount =document.querySelector(".curr-bid-amount")
-      const inputBidAmount = document.querySelector(".bid-amount")
+      const currBidAmount = document.querySelector(".curr-bid-amount");
+      const inputBidAmount = document.querySelector(".bid-amount");
       inputBidBtn.addEventListener("click", () => {
-        var curr=currBidAmount.innerHTML
-        var inputBid=inputBidAmount.value;
-        
-        if(Number(inputBid)>Number(curr)){
-            console.log('going to emit new bid');
-            console.log('<%=userData.teamCode %>');
-            socket.emit('bid','<%=userData.teamCode %>', inputBid);
+        var curr = currBidAmount.innerHTML;
+        var inputBid = inputBidAmount.value;
+
+        if (Number(inputBid) > Number(curr)) {
+          console.log("going to emit new bid");
+          console.log("<%=userData.teamCode %>");
+          socket.emit("bid", "<%=userData.teamCode %>", inputBid);
         }
       });
 
-      socket.on('currBidData', (newTeamCode, newBidAmount) => {
+      socket.on("currBidData", (newTeamCode, newBidAmount) => {
         console.log("new value coming");
         currBidAmount.innerHTML = newBidAmount;
       });

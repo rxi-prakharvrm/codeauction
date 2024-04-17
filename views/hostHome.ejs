@@ -9,20 +9,25 @@
         <label for="input">enter question number: </label>
         <input id="input" type="text">
         <button id="send-btn"> send</button>
+        <button id="abort">Abort</button>
         <button id="update-btn">update bid info</button>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
             const socket = io();
             const input= document.getElementById('input')
-
-            const send_btn = document.getElementById('send-btn')
+            const sendBtn = document.getElementById('send-btn')
+            const abortBtn = document.getElementById('abort')
             const update_btn = document.getElementById('update-btn')
             //send the current question to sockets
-            send_btn.addEventListener('click',()=>{
-
+            sendBtn.addEventListener('click',()=>{
+                // sendBtn.disabled = true;
                 const txt=input.value
                 socket.emit(`host`,txt)
+            })
+
+            abortBtn.addEventListener("click", () => {
+                socket.emit("abortCurrBid");
             })
 
             //trigger to update points of sockets after current question
@@ -30,6 +35,10 @@
                 const txt=input.value
                 socket.emit(`update-user-data`,txt)
             })
+
+            // socket.on("timeIsUp", () => {
+            //     sendBtn.disabled = false;
+            // })
 
             // socket.on('sending',(message)=>{
             //     console.log(message);

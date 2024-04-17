@@ -53,6 +53,14 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("abortCurrBid", () => {
+        io.emit("abort");
+    })
+
+    // socket.on("timeUp", () => {
+    //     io.emit("timeIsUp");
+    // })
+
     socket.on('update-user-data', async () => {
         await questionBank.updateOne({ index: bidData.index }, { $set: { owner: bidData.username } })
         try {
