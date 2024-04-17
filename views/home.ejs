@@ -80,7 +80,7 @@
                     <h2 class="problem-in-bid-header">Problem in bidding</h2>
                     <div class="problem-in-bid-inner-ctr">
                         <p class="problem-in-bid-points"></p>
-                        <h2 class="problem-in-bid-title">Waiting for question</h2>
+                        <h2 class="problem-in-bid-title">Waiting for problem</h2>
                     </div>
                 </div>
                 <div class="problem-desc-outer-ctr">
@@ -110,14 +110,18 @@
                 let countdown = 59;
                 timer.innerHTML = countdown;
 
-                let timer = setInterval(() => {
+                let countDownTimer = setInterval(() => {
                     countdown--;
                     timer.innerHTML = countdown;
 
                     if (countdown <= 0) {
-                        clearInterval(timer);
+                        clearInterval(countDownTimer);
                         console.log("Time's up!");
                         timer.innerHTML = "00";
+                        title.innerHTML = "Waiting for problem";
+                        points.innerHTML = null;
+                        desc.innerHTML 
+                        
 
                         // socket.emit("timer", ())
                     }
