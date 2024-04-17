@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME - CODE AUCTION</title>
-    <link rel="stylesheet" href="./css/homenew.css">
+    <link rel="stylesheet" href="./css/home.css">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
                 <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
                 <div class="team-logo">T</div>
                 <span class="team-id">
-                    <%= userData.teamcode %>
+                    <%= teamCode %>
                 </span>
             </div>
             <h2 class="code-auction-logo">Code Auction</h2>
@@ -58,13 +58,19 @@
                 <div class="bidding-info-outer-ctr">
                     <h2 class="bidding-info-header">Bidding Info</h2>
                     <div class="bidding-info-inner-ctr">
-                        <div class="remaining-time-ctr">
-                            <h3 class="remaining-time-header">Remaining Time</h3>
-                            <div class="remaining-time-clock">00:<%= userData.remainingTime %>s</div>
+                        <div class="bidding-info-upper-half-ctr">
+                            <div class="remaining-time-ctr">
+                                <h3 class="remaining-time-header">Remaining Time</h3>
+                                <div class="remaining-time-clock">00:<%= teamData.remainingTime %>s</div>
+                            </div>
+                            <div class="curr-bid-ctr">
+                                <h3 class="curr-bid-header">Current Bid</h3>
+                                <div class="curr-bid-amount"><%= teamData.currBidAmount %></div>
+                            </div>
                         </div>
-                        <div class="curr-bid-ctr">
-                            <h3 class="curr-bid-header">Current Bid</h3>
-                            <div class="curr-bid-amount"><%= userData.currBidAmount %></div>
+                        <div class="bidding-info-lower-half-ctr">
+                            <input type="number" name="bid-amount" class="bid-amount" placeholder="Enter your bid amount">
+                            <input type="button" value="Bid" class="bid-btn">
                         </div>
                     </div>                    
                 </div>
@@ -73,19 +79,23 @@
                 <div class="problem-in-bid-outer-ctr">
                     <h2 class="problem-in-bid-header">Problem in bidding</h2>
                     <div class="problem-in-bid-inner-ctr">
-                        <p class="problem-in-bid-points"><%= userData.problemPoints %></p>
-                        <h2 class="problem-in-bid-title"><%= userData.problemTitle %></h2>
+                        <p class="problem-in-bid-points"><%= teamData.problemPoints %></p>
+                        <h2 class="problem-in-bid-title"><%= teamData.problemTitle %></h2>
                     </div>
                 </div>
                 <div class="problem-desc-outer-ctr">
                     <h2 class="problem-desc-header">Problem Description</h2>
                     <div class="problem-desc-inner-ctr">
-                        <p class="problem-desc"><%= userData.problemDesc %></p>
+                        <p class="problem-desc"><%= teamData.problemDesc %></p>
                         <div class="problem-desc-bottom-overlay"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+    </script>
 </body>
 </html>

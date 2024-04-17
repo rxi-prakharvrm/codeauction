@@ -74,12 +74,16 @@ app.post('/signUp', async (req,res)=>{
     
 })
 
+let teamCode;
+
 app.post('/login', async (req,res)=>{
-    const userData={
+    const userData = {
         teamCode: req.body.teamCode,
         username: req.body.username,
         password: req.body.password
     }
+
+    teamCode = userData.teamCode;
 
     const teamData = {
         totalPoints: 20,
@@ -101,6 +105,23 @@ app.post('/login', async (req,res)=>{
     }
 })
 
+app.get('/home', async(req, res) => {
+    const teamData = {
+        totalPoints: 20,
+        purse: 12,
+        remainingTime: 59,
+        currBidAmount: 6,
+        problemPoints: 4,
+        problemTitle: "Find minimum in rotated sorted array",
+        problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
+    }
+
+    res.render('home', {
+        teamCode,
+        teamData
+    });
+})
+
 app.get('/hostLogin',(req,res)=>{
     res.render('./hostLogin')
 })
@@ -117,8 +138,6 @@ app.post('/hostLogin',async(req,res)=>{
     else{
         res.send(authResult.message)
     }
-    
-
 })
 
 

@@ -129,11 +129,12 @@ body {
 
 .selected-problem-ctr {
     background-color: #d9d9d9;
-    padding: 0.8rem 1.6rem;
+    padding: 1.2rem 1.6rem;
     color: #09102F;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 1rem;
 }
 
 .selected-problem-points {
@@ -164,17 +165,52 @@ body {
 .bidding-info-inner-ctr {
     height: 25rem;
     display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.bidding-info-upper-half-ctr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bidding-info-lower-half-ctr {
+    margin-top: 1.6rem;
+    display: flex;
     justify-content: space-between;
 }
 
+.bid-amount {
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.8rem;
+    outline: none;
+    border-radius: 3rem;
+    background-color: #d9d9d9;
+}
+
+.bid-btn {
+    padding: 1.2rem 3.6rem;
+    outline: none;
+    background-color: #d9d9d9;
+    color: #09102F;
+    font-size: 2.4rem;
+    border-radius: 3rem;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
 .remaining-time-ctr, .curr-bid-ctr {
-    height: 25rem;
+    height: 18rem;
     width: 48%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     background-color: #d9d9d9;
+    border-radius: 1rem;
 }
 
 .remaining-time-header, .curr-bid-header {
@@ -182,9 +218,9 @@ body {
 }
 
 .remaining-time-clock, .curr-bid-amount {
-    height: 12rem;
-    width: 12rem;
-    padding: 4.5rem 0;
+    height: 10rem;
+    width: 10rem;
+    padding: 3.5rem 0;
     font-size: 2.4rem;
     font-weight: 500;
     background-color: #ffffff;
@@ -194,7 +230,7 @@ body {
 }
 
 .curr-bid-amount {
-    padding: 3rem 0;
+    padding: 2rem 0;
     font-size: 4.8rem;
     color: #090909;
 }
@@ -228,6 +264,7 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    border-radius: 1rem;
 }
 
 .problem-desc-inner-ctr {
@@ -261,11 +298,13 @@ body {
     /* padding: 1.6rem; */
 }
 
-.problem-desc-bottom-overlay, .problem-desc-bottom-overlay {
+.problem-desc-bottom-overlay {
     width: 100%;
-    height: 2rem;
+    height: 3rem;
     position: absolute;
     bottom: 0;
     left: 0;
-    background: linear-gradient(to top, #d9d9d9, #d9d9d942);
+    background: linear-gradient(to top, #d9d9d9 50%, #d9d9d942);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
