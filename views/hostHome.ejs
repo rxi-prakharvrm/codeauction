@@ -15,6 +15,7 @@
             const socket = io();
             const input= document.getElementById('input')
             const button= document.getElementById('btn')
+            
             button.addEventListener('click',()=>{
                 const txt=input.value
                 socket.emit(`host`,txt)
