@@ -95,7 +95,13 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
+        const socket = io();
+        const points = document.querySelector('.problem-in-bid-points');
+        const title = document.querySelector('.problem-in-bid-title');
+
+        socket.on("host", (message) => {
+            
+        })
     </script>
 </body>
 </html>
