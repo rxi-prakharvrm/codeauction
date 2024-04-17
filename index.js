@@ -94,7 +94,7 @@ app.post('/login', async (req,res)=>{
     const authResult= await authenticateUser(userData);
 
     if(authResult.success){
-        res.render('homenew',{userData:userData})
+        res.render('homenew',{userData:userData,teamData})
     }
     else{
         res.send(authResult.message)
