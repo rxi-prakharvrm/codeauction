@@ -111,8 +111,8 @@
 
       socket.on("question", (titleServer, descServer, pointsServer) => {
         title.innerHTML = titleServer;
-        points.innerHTML = pointsServer;
         desc.innerHTML = descServer;
+        points.innerHTML = pointsServer;
 
         function startCountdown() {
           let countdown = 59;
@@ -122,7 +122,11 @@
             countdown--;
             timer.innerHTML = countdown;
 
-            socket.on("abort", () => {
+            socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
+                title.innerHTML = titleDefault;
+                desc.innerHTML = descDefault;
+                points.innerHTML = pointsDefault;
+
                 countdown = 0;
                 clearInterval(countDownTimer);
             })
@@ -135,7 +139,7 @@
               points.innerHTML = null;
               desc.innerHTML = "No problem in bid";
 
-            //   socket.emit("timeUp");
+              socket.emit("timeUp");
             }
           }, 1000);
         }

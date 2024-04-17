@@ -54,12 +54,16 @@ io.on('connection', (socket) => {
     })
 
     socket.on("abortCurrBid", () => {
-        io.emit("abort");
+        var title = 'Waiting for problem...';
+        var points = null
+        var desc = "No problem in bid"
+
+        io.emit("abort", title, desc, points);
     })
 
-    // socket.on("timeUp", () => {
-    //     io.emit("timeIsUp");
-    // })
+    socket.on("timeUp", () => {
+        io.emit("timeIsUp");
+    })
 
     socket.on('update-user-data', async () => {
         await questionBank.updateOne({ index: bidData.index }, { $set: { owner: bidData.username } })
