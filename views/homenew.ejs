@@ -38,27 +38,54 @@
 
     <div class="hero-section">
         <div class="inner-hero-section">
-            <div class="upper-half">
-                <div class="players-ctr">
-                    <div class="player-ctr">
-                        <!-- <div class="player-logo player-logo">P</div> -->
-                        <div class="player-name"></div>
+            <div class="hero-upper-half-ctr">
+                <div class="selected-problems-outer-ctr">
+                    <h2 class="selected-problems-header">Selected Problems</h2>
+                    <div class="selected-problems-inner-ctr">
+                        <div class="selected-problem-ctr">
+                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
+                        </div>
+                        <div class="selected-problem-ctr">
+                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
+                        </div>
+                        <div class="selected-problem-ctr">
+                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
+                        </div>
+                        <div class="selected-problem-ctr">
+                            <p class="selected-problem">Minimum Window Substring</p><span class="selected-problem-points">5</span>
+                        </div>
                     </div>
-                    <div class="player-ctr">
-                        <!-- <div class="player-logo player-logo">P</div> -->
-                        <div class="player-name"></div>
+                </div>
+                <div class="bidding-info-outer-ctr">
+                    <h2 class="bidding-info-header">Bidding Info</h2>
+                    <div class="bidding-info-inner-ctr">
+                        <div class="remaining-time-ctr">
+                            <h3 class="remaining-time-header">Remaining Time</h3>
+                            <div class="remaining-time-clock">00:<%= remainingTime %>s</div>
+                        </div>
+                        <div class="curr-bid-ctr">
+                            <h3 class="curr-bid-header">Current Bid</h3>
+                            <div class="curr-bid-amount"><%= currBidAmount %></div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="hero-lower-half-ctr">
+                <div class="problem-in-bid-outer-ctr">
+                    <h2 class="problem-in-bid-header">Problem in bidding</h2>
+                    <div class="problem-in-bid-inner-ctr">
+                        <p class="problem-in-bid-points"><%= problemPoints %></p>
+                        <h2 class="problem-in-bid-title"><%= problemTitle %></h2>
                     </div>
-                    <div class="player-ctr">
-                        <!-- <div class="player-logo player-logo">P</div> -->
-                        <div class="player-name"></div>
-                    </div>
-                    <div class="player-ctr">
-                        <!-- <div class="player-logo player-logo">P</div> -->
-                        <div class="player-name"></div>
+                </div>
+                <div class="problem-desc-outer-ctr">
+                    <h2 class="problem-desc-header">Problem Description</h2>
+                    <div class="problem-desc-inner-ctr">
+                        <p class="problem-desc"><%= problemDesc %></p>
+                        <div class="problem-desc-bottom-overlay"></div>
                     </div>
                 </div>
             </div>
-            <div class="lower-half"></div>
         </div>
     </div>
 </body>
