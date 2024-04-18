@@ -36,11 +36,11 @@
       <div class="inner-hero-section">
         <div class="hero-upper-half-ctr">
           <div class="selected-problems-outer-ctr">
-            <h2 class="selected-problems-header">Selected Problems</h2>
+            <h2 class="selected-problems-header">Allocated Problems</h2>
             <div class="selected-problems-inner-ctr">
               <div class="selected-problem-ctr">
-                <p class="selected-problem">Minimum Window Substring</p>
-                <span class="selected-problem-points">5</span>
+                <p class="selected-problem">title</p>
+                <span class="selected-problem-owner">owner</span>
               </div>
               <div class="selected-problem-ctr">
                 <p class="selected-problem">Minimum Window Substring</p>
@@ -165,6 +165,17 @@
         console.log("new value coming");
         currBidAmount.innerHTML = newBidAmount;
       });
+      const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
+
+      socket.on('updateInfo',(list)=>{
+
+        console.log(list);
+        list.forEach(element => {
+          selected_problems_inner_ctr.innerHTML+=
+          `<p class="selected-problem">${element.statement}</p>
+          <span class="selected-problem-owner">${element.owner}</span>`
+        });
+      })
     </script>
   </body>
 </html>

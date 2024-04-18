@@ -40,6 +40,7 @@ const questions = new mongoose.Schema({
     },
     owner:{
         type:String,
+        default:null
     },
     statement:{
         type:String
