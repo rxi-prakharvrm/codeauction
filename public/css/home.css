@@ -137,7 +137,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-y: scroll;
+    gap: 10px;
 }
+
 
 .selected-problem-ctr {
     background-color: #d9d9d9;
