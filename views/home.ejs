@@ -171,9 +171,11 @@
 
         console.log(list);
         list.forEach(element => {
-          selected_problem_inner_ctr.innerHTML+=
-          `<p class="selected-problem">${element.statement}</p>
-          <span class="selected-problem-owner">${element.owner}</span>`
+          selected_problems_inner_ctr.innerHTML+=
+          `<div class="selected-problem-ctr">
+                <p class="selected-problem">${element.statement}</p>
+                <span class="selected-problem-owner">${element.owner}</span>
+              </div>`
         });
       })
     </script>
