@@ -16,7 +16,10 @@
           <div class="team-logo">T</div>
           <span class="team-id"> <%= userData.teamCode %> </span>
         </div>
-        <h2 class="code-auction-logo">Code Auction</h2>
+        <div class="du-logo-ctr">          
+          <img src="images/du.png" alt="DU Logo" class="du-logo">
+          <h2 class="code-auction-logo">Code Auction</h2>
+        </div>
         <div class="points-ctr">
           <div class="total-ctr">
             <div class="total-title">Total</div>
@@ -150,6 +153,7 @@
       const inputBidBtn = document.querySelector(".bid-btn");
       const currBidAmount = document.querySelector(".curr-bid-amount");
       const inputBidAmount = document.querySelector(".bid-amount");
+
       inputBidBtn.addEventListener("click", () => {
         var curr = currBidAmount.innerHTML;
         var inputBid = inputBidAmount.value;
@@ -165,10 +169,10 @@
         console.log("new value coming");
         currBidAmount.innerHTML = newBidAmount;
       });
+
       const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
 
       socket.on('updateInfo',(list)=>{
-
         console.log(list);
         list.forEach(element => {
           selected_problem_inner_ctr.innerHTML+=
