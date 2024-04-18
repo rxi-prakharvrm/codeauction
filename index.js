@@ -67,6 +67,10 @@ io.on('connection', (socket) => {
 
     socket.on('update-user-data', async () => {
         await questionBank.updateOne({ index: bidData.index }, { $set: { owner: bidData.username } })
+        const list= await questionBank.find({})
+        const newList=list.filter(question=>question.owner!=null)
+        io.emit('updateInfo',newList)
+        console.log(newList);
         try {
             await teamData.findOne({ teamCode: bidData.teamCode })
 
@@ -75,7 +79,7 @@ io.on('connection', (socket) => {
                     $set: { points: teamData.points - bidData.amount },
                     $push: { questions: bidData.statement }
                 })
-                socket.emit('updateInfo')
+                io.emit('updateInfo',newList)
             }
         }
         catch (err) {
