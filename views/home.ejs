@@ -17,8 +17,8 @@
           <span class="team-id"> <%= userData.teamCode %> </span>
         </div>
         <div class="logo-ctr">
-          <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
           <img src="images/du.png" alt="DU Logo" class="du-logo">
+          <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
           <h2 class="code-auction-logo">Code Auction</h2>
         </div>
         <div class="points-ctr">
@@ -41,11 +41,11 @@
         <div class="hero-upper-half-ctr">
           <div class="selected-problems-outer-ctr">
             <h2 class="selected-problems-header">Allocated Problems</h2>
+            <div class="selected-problem-header-ctr">
+              <p class="selected-problem-header-title">title</p>
+              <span class="selected-problem-header-owner">owner</span>
+            </div>
             <div class="selected-problems-inner-ctr">
-              <div class="selected-problem-header-ctr">
-                <p class="selected-problem-header-title">title</p>
-                <span class="selected-problem-header-owner">owner</span>
-              </div>
             
               <% titleOwner.forEach(element => { %>
                 <div class="selected-problem-ctr">
@@ -89,7 +89,10 @@
           <div class="problem-in-bid-outer-ctr">
             <h2 class="problem-in-bid-header">Problem in bidding</h2>
             <div class="problem-in-bid-inner-ctr">
-              <p class="problem-in-bid-points"></p>
+              <div class="problem-in-bid-points-ctr">
+                <p class="problem-in-bid-points"></p>
+                <p class="problem-in-bid-points-text">Points</p>
+              </div>
               <h2 class="problem-in-bid-title">Waiting for problem...</h2>
             </div>
           </div>
@@ -110,15 +113,18 @@
       const title = document.querySelector(".problem-in-bid-title");
       const desc = document.querySelector(".problem-desc");
       const timer = document.querySelector(".timer");
-
+      
+      const inputBidBtn = document.querySelector(".bid-btn");
+      const currBidAmount = document.querySelector(".curr-bid-amount");
+      const inputBidAmount = document.querySelector(".bid-amount");
       
       socket.on("question", (titleServer, descServer, pointsServer) => {
         title.innerHTML = titleServer;
         desc.innerHTML = descServer;
         points.innerHTML = pointsServer;
-
+        currBidAmount.innerHTML='0'
         function startCountdown() {
-          let countdown = 59;
+          let countdown = 20;
           timer.innerHTML = countdown;
 
           let countDownTimer = setInterval(() => {
@@ -150,9 +156,6 @@
         startCountdown();
       });
 
-      const inputBidBtn = document.querySelector(".bid-btn");
-      const currBidAmount = document.querySelector(".curr-bid-amount");
-      const inputBidAmount = document.querySelector(".bid-amount");
 
       inputBidBtn.addEventListener("click", () => {
         var curr = currBidAmount.innerHTML;
