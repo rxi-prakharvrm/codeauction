@@ -23,11 +23,11 @@
         <div class="points-ctr">
           <div class="total-ctr">
             <div class="total-title">Total</div>
-            <span class="total-points"><%= teamData.totalPoints %></span>
+            <span class="total-points">20</span>
           </div>
           <div class="purse-ctr">
             <div class="purse-title">Purse</div>
-            <span class="purse-points"><%= teamData.purse %></span>
+            <span class="purse-points"><%=loginTeamData.points %></span>
           </div>
         </div>
       </div>
@@ -45,8 +45,7 @@
                 <p class="selected-problem">title</p>
                 <span class="selected-problem-owner">owner</span>
               </div>
-              
-              
+            
               
             </div>
           </div>
@@ -103,6 +102,7 @@
       const desc = document.querySelector(".problem-desc");
       const timer = document.querySelector(".timer");
 
+      
       socket.on("question", (titleServer, descServer, pointsServer) => {
         title.innerHTML = titleServer;
         desc.innerHTML = descServer;
@@ -163,7 +163,7 @@
 
       const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
 
-      socket.on('updateInfo',(list)=>{
+      socket.on('updateInfo',(list,teamPoints)=>{
         console.log(list);
         list.forEach(element => {
           selected_problems_inner_ctr.innerHTML+=
@@ -172,6 +172,18 @@
                 <span class="selected-problem-owner">${element.owner}</span>
               </div>`
         });
+
+        console.log(teamPoints);
+
+        console.log('<%=userData.teamCode %>');
+
+        const teamPoint=teamPoints.find((data)=>{
+          return data.team=='<%=userData.teamCode %>'
+        })
+
+        const purse_points= document.querySelector('.purse-points')
+        console.log(teamPoint);
+        purse_points.innerHTML=teamPoint.points
       })
     </script>
   </body>
