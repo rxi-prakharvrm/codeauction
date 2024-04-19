@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/index.css">
     <style>
 
     </style>
@@ -15,9 +15,9 @@
     <div class="main">
 
         <div class="left">
-            <div class="logo-ctr">
-                <img src="images/du.png" alt="DU Logo" class="du-logo">
-                <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
+            <div class="login-logo-ctr logo-ctr">
+                <img src="images/du.png" alt="DU Logo" class="login-du-logo du-logo">
+                <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="login-sankalan-logo sankalan-logo">
             </div>
             <div class="left-text">
                 Code Auction
@@ -29,13 +29,13 @@
                 <h2>Login</h2>
                 <form action="/login" method="POST" id="form">
                     <div class="form-element">
-                        <label for="team">Team Code</label><br> 
+                        <label for="team">Team Name</label><br> 
                         <input type="text" name="teamCode" class="input" autocomplete="off"><br>
                     </div>
 
                     <div class="form-element">
 
-                        <label for="username">Name</label><br>
+                        <label for="username">Username</label><br>
                         <input type="text" id="username" name="username"  autocomplete="off" required><br>
                     </div>
                     
@@ -43,7 +43,7 @@
                         <label for="pass">Password</label><br>
                         <input type="password" name="password" id="pass"><br>
                     </div>
-                    <input type="submit" id="submit">
+                    <input type="submit" id="submit" value="Login">
                 </form>
                 <div class="bottom">
                     <p>If haven't registered</p>

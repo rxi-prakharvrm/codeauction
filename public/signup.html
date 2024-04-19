@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="stylesheet" href="./css/index.css">
     <style>
 
     </style>
@@ -15,9 +15,9 @@
     <div class="main">
 
         <div class="left">
-            <div class="logo-ctr">
-                <img src="images/du.png" alt="DU Logo" class="du-logo">
-                <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
+            <div class="signup-logo-ctr logo-ctr">
+                <img src="images/du.png" alt="DU Logo" class="signup-du-logo du-logo">
+                <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="signup-sankalan-logo sankalan-logo">
             </div>
             <div class="left-text">
                 Code Auction
@@ -29,13 +29,13 @@
                 <h2>Sign Up</h2>
                 <form action="/signUp" method="POST" id="form">
                     <div class="form-element">
-                        <label for="team">Team Code</label><br> 
+                        <label for="team">Team Name</label><br> 
                         <input type="text" name="teamCode" class="input" autocomplete="off"><br>
                     </div>
 
                     <div class="form-element">
 
-                        <label for="username">Name</label><br>
+                        <label for="username">Username</label><br>
                         <input type="text" id="username" name="username"  autocomplete="off" required><br>
                     </div>
                     
@@ -47,7 +47,7 @@
                         <label for="college">Institution/College</label><br>
                         <input type="text" name="institution" id="college"><br>
                     </div>
-                    <input type="submit" id="submit">
+                    <input type="submit" id="submit" value="Sign up">
                 </form>
             </div>
 
