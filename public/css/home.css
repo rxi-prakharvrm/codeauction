@@ -68,6 +68,7 @@ body {
 
 .du-logo {
     width: 6rem;
+    margin-right: 0.5rem;
 }
 
 .sankalan-logo {
@@ -128,33 +129,35 @@ body {
     width: 48%;
     text-align: center;
     background-color: #09102F;
-    padding: 2rem;
+    border-radius: 1rem;
 }
 
 .selected-problems-header {
     color: #d9d9d9;
-    padding-bottom: 2rem;
+    padding: 1.6rem 0;
 }
 
 .selected-problems-inner-ctr {
     height: 25rem;
     display: flex;
-    flex-direction: column;
- 
+    flex-direction: column; 
     overflow-y: scroll;
     gap: 10px;
+    padding: 2rem;
 }
 
 .selected-problem-header-ctr {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.6rem;
+    padding: 0 2.5rem;
 }
 
 .selected-problem-header-title, .selected-problem-header-owner {
     text-transform: capitalize;
     font-weight: bold;
+    color: #fff;
+    font-size: 2.2rem;
 }
 
 .selected-problem-ctr {
@@ -185,6 +188,7 @@ body {
     text-align: center;
     background-color: #09102F;
     padding: 2rem;
+    border-radius: 1rem;
 }
 
 .bidding-info-header {
@@ -275,11 +279,13 @@ body {
     justify-content: space-between;
     background-color: #09102F;
     align-items: center;
+    border-radius: 1rem;
 }
 
 .problem-in-bid-outer-ctr, .problem-desc-outer-ctr {
     width: 34%;
     text-align: center;
+    border-radius: 1rem;
 }
 
 .problem-desc-outer-ctr {
@@ -350,12 +356,12 @@ body {
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #aaaaaa; 
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #757575; 
   }
   
   /* Handle on hover */

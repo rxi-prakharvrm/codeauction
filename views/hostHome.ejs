@@ -27,6 +27,7 @@
             })
 
             abortBtn.addEventListener("click", () => {
+                sendBtn.disabled = false;
                 socket.emit("abortCurrBid");
             })
 
