@@ -160,8 +160,9 @@
       inputBidBtn.addEventListener("click", () => {
         var curr = currBidAmount.innerHTML;
         var inputBid = inputBidAmount.value;
+        const pursePoints = document.querySelector('.purse-points');
 
-        if (Number(inputBid) > Number(curr)) {
+        if (Number(inputBid) > Number(curr) && Number(inputBid) <= pursePoints.innerHTML) {
           console.log("going to emit new bid");
           console.log("<%=userData.teamCode %>");
           socket.emit("bid", "<%=userData.teamCode %>", inputBid);
