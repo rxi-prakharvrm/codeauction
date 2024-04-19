@@ -1,6 +1,6 @@
 const mongoose= require('mongoose')
 
-const db = "mongodb+srv://codeauction:hv56wSxzNCK1b8Bl@cluster0.kwir85v.mongodb.net/codeauction"
+const db = process.env.MONGO_URI;
 
 mongoose.connect(db).then(() => {
     mongoose.set('strictQuery', false);
