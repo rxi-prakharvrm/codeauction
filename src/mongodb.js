@@ -1,12 +1,16 @@
 const mongoose= require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/CodeAuction')
-.then(()=>{
-    console.log("connected to database sucessfully");
-})
-.catch(()=>{
-    console.log("error connecting to database");
-})
+const db = "mongodb+srv://codeauction:hv56wSxzNCK1b8Bl@cluster0.kwir85v.mongodb.net/codeauction"
+
+mongoose.connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(() => {
+    mongoose.set('strictQuery', false);
+    console.log("Connection successful!")
+}).catch((err) => console.log("No Connection!"))
 
 const user= new mongoose.Schema({
     teamCode:{
