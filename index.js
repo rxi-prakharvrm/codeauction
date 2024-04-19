@@ -125,7 +125,7 @@ app.post('/signUp', async (req, res) => {
     if (check.success) {
         await userData.insertMany([data])
         await teamData.insertMany({team:data.teamCode,})
-        res.send('<h2>Data Submitted</h2>')
+        res.sendFile(__dirname + '/public/login.html');
     }
     else {
         res.send(check.message)
