@@ -59,7 +59,7 @@ const teamdata=new mongoose.Schema({
     },
     points:{
         type:Number,
-        default:20
+        default:200
     },
     questions:{
         type:[String],
