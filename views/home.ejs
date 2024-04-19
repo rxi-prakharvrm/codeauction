@@ -92,7 +92,7 @@
             <div class="problem-in-bid-inner-ctr">
               <div class="problem-in-bid-points-ctr">
                 <p class="problem-in-bid-points"></p>
-                <p class="problem-in-bid-points-text">Points</p>
+                <p class="problem-in-bid-points-text">Difficulty Level</p>
               </div>
               <h2 class="problem-in-bid-title">Waiting for problem...</h2>
             </div>
@@ -118,11 +118,15 @@
       const inputBidBtn = document.querySelector(".bid-btn");
       const currBidAmount = document.querySelector(".curr-bid-amount");
       const inputBidAmount = document.querySelector(".bid-amount");
+      const purse_points= document.querySelector('.purse-points') 
+
+      //user points
+      let user_points=`<%=points %>`
       
-      socket.on("question", (titleServer, descServer, pointsServer) => {
+      socket.on("question", (titleServer, descServer, tagServer) => {
         title.innerHTML = titleServer;
         desc.innerHTML = descServer;
-        points.innerHTML = pointsServer;
+        points.innerHTML = tagServer;
         currBidAmount.innerHTML='0'
         function startCountdown() {
           let countdown = 59;
@@ -159,46 +163,33 @@
       });
 
 
+      const pursePoints = document.querySelector('.purse-points');
       inputBidBtn.addEventListener("click", () => {
         var curr = currBidAmount.innerHTML;
         var inputBid = inputBidAmount.value;
-        const pursePoints = document.querySelector('.purse-points');
-
-        if (Number(inputBid) > Number(curr) && Number(inputBid) <= pursePoints.innerHTML) {
-          console.log("going to emit new bid");
-          console.log("<%=userData.teamCode %>");
+        if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
           socket.emit("bid", "<%=userData.teamCode %>", inputBid);
         }
       });
 
       socket.on("currBidData", (newTeamCode, newBidAmount) => {
-        console.log("new value coming");
         currBidAmount.innerHTML = newBidAmount;
       });
 
       const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
 
-      socket.on('updateInfo',(list,teamPoints)=>{
-        selected_problems_inner_ctr.innerHTML=""
-        list.forEach(element => {
+      socket.on('updateInfo',(bidData_title,bidData_teamCode,bidData_amount)=>{
           selected_problems_inner_ctr.innerHTML+=
           `<div class="selected-problem-ctr">
-                <p class="selected-problem">${element.statement}</p>
-                <span class="selected-problem-owner">${element.owner}</span>
+                <p class="selected-problem">${bidData_title}</p>
+                <span class="selected-problem-owner">${bidData_teamCode}</span>
               </div>`
-        });
 
-        console.log(teamPoints);
-
-        console.log('<%=userData.teamCode %>');
-
-        const teamPoint=teamPoints.find((data)=>{
-          return data.team=='<%=userData.teamCode %>'
-        })
-
-        const purse_points= document.querySelector('.purse-points')
-        console.log(teamPoint);
-        purse_points.innerHTML=teamPoint.points
+        if(bidData_teamCode=='<%=userData.teamCode %>'){
+          user_points-=Number(bidData_amount);
+          console.log('user points are',user_points);
+          purse_points.innerHTML=user_points
+        }
       })
     </script>
   </body>

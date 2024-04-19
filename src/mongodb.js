@@ -1,11 +1,6 @@
 const mongoose= require('mongoose')
 
-const db = "mongodb+srv://codeauction:hv56wSxzNCK1b8Bl@cluster0.kwir85v.mongodb.net/codeauction"
-
-mongoose.connect(db).then(() => {
-    mongoose.set('strictQuery', false);
-    console.log("Connection successful!")
-}).catch((err) => console.log("Error connecting to MongoDB:", err));
+mongoose.connect('mongodb://localhost:27017/CodeAuction')
 
 const user= new mongoose.Schema({
     teamCode:{
@@ -47,8 +42,9 @@ const questions = new mongoose.Schema({
     desc:{
         type:String
     },
-    points:{
-        type:Number
+    tag:{
+        type:String,
+        default:""
     }
 })
 
