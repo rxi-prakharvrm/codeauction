@@ -16,7 +16,8 @@
           <div class="team-logo">T</div>
           <span class="team-id"> <%= userData.teamCode %> </span>
         </div>
-        <div class="du-logo-ctr">          
+        <div class="logo-ctr">
+          <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
           <img src="images/du.png" alt="DU Logo" class="du-logo">
           <h2 class="code-auction-logo">Code Auction</h2>
         </div>
@@ -40,11 +41,11 @@
         <div class="hero-upper-half-ctr">
           <div class="selected-problems-outer-ctr">
             <h2 class="selected-problems-header">Allocated Problems</h2>
-            <div class="selected-problem-ctr">
-              <p class="selected-problem">title</p>
-              <span class="selected-problem-owner">owner</span>
-            </div>
             <div class="selected-problems-inner-ctr">
+              <div class="selected-problem-header-ctr">
+                <p class="selected-problem-header-title">title</p>
+                <span class="selected-problem-header-owner">owner</span>
+              </div>
             
               <% titleOwner.forEach(element => { %>
                 <div class="selected-problem-ctr">

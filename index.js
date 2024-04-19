@@ -136,7 +136,7 @@ app.post('/signUp', async (req, res) => {
 let teamCode;
 
 app.get('/login',(req,res)=>{
-    res.send("hello")
+    res.sendFile(__dirname + '/public/login.html');
 })
 app.post('/login', async (req, res) => {
     const userData = {
