@@ -20,7 +20,7 @@
                 <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="signup-sankalan-logo sankalan-logo">
             </div>
             <div class="left-text">
-                Code Auction
+                Code<br>Auction
             </div>
         </div>
 
@@ -30,25 +30,29 @@
                 <form action="/signUp" method="POST" id="form">
                     <div class="form-element">
                         <label for="team">Team Name</label><br> 
-                        <input type="text" name="teamCode" class="input" autocomplete="off"><br>
+                        <input class="signup-input" type="text" name="teamCode" class="input" autocomplete="off"><br>
                     </div>
 
                     <div class="form-element">
 
                         <label for="username">Username</label><br>
-                        <input type="text" id="username" name="username"  autocomplete="off" required><br>
+                        <input class="signup-input" type="text" id="username" name="username"  autocomplete="off" required><br>
                     </div>
                     
                     <div class="form-element">
                         <label for="pass">Password</label><br>
-                        <input type="password" name="password" id="pass"><br>
+                        <input class="signup-input" type="password" name="password" id="pass"><br>
                     </div>
                     <div class="form-element">
                         <label for="college">Institution/College</label><br>
-                        <input type="text" name="institution" id="college"><br>
+                        <input class="signup-input" type="text" name="institution" id="college"><br>
                     </div>
-                    <input type="submit" id="submit" value="Sign up">
+                    <input class="signup-input" type="submit" id="submit" value="Sign up">
                 </form>
+                <div class="bottom">
+                    <p>Already registered?</p>
+                    <a href="/login.html">Login</a>
+                </div>
             </div>
 
         </div>

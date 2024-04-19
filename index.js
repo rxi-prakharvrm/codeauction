@@ -29,13 +29,12 @@ io.on('connection', (socket) => {
         bidData.teamCode = null
         bidData.amount = 0
 
-
         var question = await questionBank.findOne({ index: idx })
         var title = 'Waiting for problem...';
         var points = null
         var desc = "No problem in bid"
         if (question != null) {
-            title = question.statement
+            title = question.title
             points = question.points
             desc = question.desc
             bidData.statement = title

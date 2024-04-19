@@ -2,15 +2,10 @@ const mongoose= require('mongoose')
 
 const db = "mongodb+srv://codeauction:hv56wSxzNCK1b8Bl@cluster0.kwir85v.mongodb.net/codeauction"
 
-mongoose.connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-}).then(() => {
+mongoose.connect(db).then(() => {
     mongoose.set('strictQuery', false);
     console.log("Connection successful!")
-}).catch((err) => console.log("No Connection!"))
+}).catch((err) => console.log("Error connecting to MongoDB:", err));
 
 const user= new mongoose.Schema({
     teamCode:{
@@ -46,7 +41,7 @@ const questions = new mongoose.Schema({
         type:String,
         default:null
     },
-    statement:{
+    title:{
         type:String
     },
     desc:{
