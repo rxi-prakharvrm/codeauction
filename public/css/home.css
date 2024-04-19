@@ -59,7 +59,7 @@ body {
     border-radius: 100%;
 }
 
-.du-logo-ctr {
+.logo-ctr {
     height: 100%;
     display: flex;
     justify-content: center;
@@ -67,6 +67,10 @@ body {
 }
 
 .du-logo {
+    width: 6rem;
+}
+
+.sankalan-logo {
     width: 6rem;
     margin-right: 1rem;
 }
@@ -141,6 +145,17 @@ body {
     gap: 10px;
 }
 
+.selected-problem-header-ctr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+}
+
+.selected-problem-header-title, .selected-problem-header-owner {
+    text-transform: capitalize;
+    font-weight: bold;
+}
 
 .selected-problem-ctr {
     background-color: #d9d9d9;
@@ -325,3 +340,25 @@ body {
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
 }
+
+/* Custom Scrollbar  */
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

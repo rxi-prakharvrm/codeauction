@@ -31,9 +31,19 @@ body {
     align-items: center;
 }
 
-.du-logo {
+.logo-ctr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.du-logo, .sankalan-logo {
     display: block;
     height: 20rem;
+}
+
+.sankalan-logo {
+    margin-right: 1rem;
 }
 
 .left-text {
