@@ -141,7 +141,7 @@ body {
     height: 25rem;
     display: flex;
     flex-direction: column; 
-    overflow-y: scroll;
+    overflow: auto;
     gap: 10px;
     padding: 2rem;
 }
@@ -388,7 +388,7 @@ body {
 
 .right-box {
     width: 70%;
-    padding: 5rem;
+    padding: 4rem;
     background-color: #828C9C;
     display: flex;
     flex-direction: column;
@@ -410,17 +410,17 @@ body {
     flex-direction: column;
     justify-content: center;
     /* align-items: center; */
-    gap: 30px;
+    gap: 20px;
     font-size: 2rem;
     font-weight: 600;
 }
 
-input {
+.login-input, .signup-input {
     width: 100%;
     margin: 1rem 0 0;
     height: 2.5rem;
     border-radius: .5rem;
-    padding: 2rem;
+    padding: 2rem 1rem;
     font-size: 1.8rem;
     outline: none;
     border: none;

@@ -76,6 +76,7 @@
               <div class="bidding-info-lower-half-ctr">
                 <input
                   type="number"
+                  min="0"
                   name="bid-amount"
                   class="bid-amount"
                   placeholder="Enter your bid amount"
@@ -147,6 +148,7 @@
               title.innerHTML = "Waiting for problem...";
               points.innerHTML = null;
               desc.innerHTML = "No problem in bid";
+              inputBidBtn.disable = true;
 
               socket.emit("timeUp");
             }
