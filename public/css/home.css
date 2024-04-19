@@ -124,7 +124,7 @@ body {
     height: 25rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+ 
     overflow-y: scroll;
     gap: 10px;
 }
