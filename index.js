@@ -46,9 +46,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('bid', (teamCode, amount) => {
+        
         if (Number(amount) > bidData.amount) {
             bidData.teamCode = teamCode;
             bidData.amount = amount
+            console.log(bidData);
             io.emit('currBidData', bidData.teamCode, bidData.amount);
         }
     })
@@ -66,20 +68,28 @@ io.on('connection', (socket) => {
     })
 
     socket.on('update-user-data', async () => {
-        await questionBank.updateOne({ index: bidData.index }, { $set: { owner: bidData.username } })
+        await questionBank.updateOne({ index: bidData.index}, { $set: { owner: bidData.teamCode } })
         const list= await questionBank.find({})
         const newList=list.filter(question=>question.owner!=null)
-        io.emit('updateInfo',newList)
+      
         console.log(newList);
+        console.log(bidData);
         try {
-            await teamData.findOne({ teamCode: bidData.teamCode })
+            const team_Data=await teamData.findOne({team:bidData.teamCode})
 
-            if (teamData) {
-                await teamData.updateOne({ teamData: bidData.teamCode }, {
-                    $set: { points: teamData.points - bidData.amount },
+            console.log("prrinting",team_Data);
+            if (team_Data) {
+                console.log('updating');
+                const updated = await teamData.updateOne({ team: bidData.teamCode }, {
+                    $set: { points: Number(team_Data.points) - Number(bidData.amount)},
                     $push: { questions: bidData.statement }
                 })
-                io.emit('updateInfo',newList)
+                console.log(updated);
+                //getting all team vs points
+                const teamPoints= await teamData.find({})
+                console.log(teamPoints);
+            
+                io.emit('updateInfo',newList,teamPoints)
             }
         }
         catch (err) {
@@ -114,6 +124,7 @@ app.post('/signUp', async (req, res) => {
     const check = await validUsername(data)
     if (check.success) {
         await userData.insertMany([data])
+        await teamData.insertMany({team:data.teamCode,})
         res.send('<h2>Data Submitted</h2>')
     }
     else {
@@ -124,51 +135,44 @@ app.post('/signUp', async (req, res) => {
 
 let teamCode;
 
+app.get('/login',(req,res)=>{
+    res.send("hello")
+})
 app.post('/login', async (req, res) => {
     const userData = {
         teamCode: req.body.teamCode,
         username: req.body.username,
         password: req.body.password
     }
-
-    teamCode = userData.teamCode;
-
-    const teamData = {
-        totalPoints: 20,
-        purse: 12,
-        remainingTime: 59,
-        currBidAmount: 6,
-        problemPoints: 4,
-        problemTitle: "Find minimum in rotated sorted array",
-        problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
-    }
-
     const authResult = await authenticateUser(userData);
 
     if (authResult.success) {
-        res.render('home', { userData: userData, teamData })
+        const loginTeamData = await teamData.findOne({team:userData.teamCode})
+        const list= await questionBank.find({})
+        const newList=list.filter(question=>question.owner!=null)
+        res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
     }
     else {
         res.send(authResult.message)
     }
 })
 
-app.get('/home', async (req, res) => {
-    const teamData = {
-        totalPoints: 20,
-        purse: 12,
-        remainingTime: 59,
-        currBidAmount: 6,
-        problemPoints: 4,
-        problemTitle: "Find minimum in rotated sorted array",
-        problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
-    }
+// app.get('/home', async (req, res) => {
+//     const teamData = {
+//         totalPoints: 20,
+//         purse: 12,
+//         remainingTime: 59,
+//         currBidAmount: 6,
+//         problemPoints: 4,
+//         problemTitle: "Find minimum in rotated sorted array",
+//         problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
+//     }
 
-    res.render('home', {
-        teamCode,
-        teamData
-    });
-})
+//     res.render('home', {
+//         teamCode,
+//         teamData
+//     });
+// })
 
 app.get('/hostLogin', (req, res) => {
     res.render('./hostLogin')
@@ -195,3 +199,4 @@ server.listen(3000, () => {
 
     console.log("app started at port 3000");
 })
+

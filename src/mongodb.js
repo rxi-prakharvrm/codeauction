@@ -55,11 +55,11 @@ const questions = new mongoose.Schema({
 
 const teamdata=new mongoose.Schema({
     team:{
-        teamCode:String
+        type:String
     },
     points:{
         type:Number,
-        default:0
+        default:20
     },
     questions:{
         type:[String],

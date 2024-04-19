@@ -23,11 +23,11 @@
         <div class="points-ctr">
           <div class="total-ctr">
             <div class="total-title">Total</div>
-            <span class="total-points"><%= teamData.totalPoints %></span>
+            <span class="total-points">20</span>
           </div>
           <div class="purse-ctr">
             <div class="purse-title">Purse</div>
-            <span class="purse-points"><%= teamData.purse %></span>
+            <span class="purse-points"><%=points %></span>
           </div>
         </div>
       </div>
@@ -40,23 +40,21 @@
         <div class="hero-upper-half-ctr">
           <div class="selected-problems-outer-ctr">
             <h2 class="selected-problems-header">Allocated Problems</h2>
+            <div class="selected-problem-ctr">
+              <p class="selected-problem">title</p>
+              <span class="selected-problem-owner">owner</span>
+            </div>
             <div class="selected-problems-inner-ctr">
-              <div class="selected-problem-ctr">
-                <p class="selected-problem">title</p>
-                <span class="selected-problem-owner">owner</span>
-              </div>
-              <div class="selected-problem-ctr">
-                <p class="selected-problem">Minimum Window Substring</p>
-                <span class="selected-problem-points">5</span>
-              </div>
-              <div class="selected-problem-ctr">
-                <p class="selected-problem">Minimum Window Substring</p>
-                <span class="selected-problem-points">5</span>
-              </div>
-              <div class="selected-problem-ctr">
-                <p class="selected-problem">Minimum Window Substring</p>
-                <span class="selected-problem-points">5</span>
-              </div>
+            
+              <% titleOwner.forEach(element => { %>
+                <div class="selected-problem-ctr">
+                    <p class="selected-problem"><%= element.statement %></p>
+                    <span class="selected-problem-owner"><%= element.owner %></span>
+                </div>
+              <% }); %>
+            
+            
+              
             </div>
           </div>
           <div class="bidding-info-outer-ctr">
@@ -112,6 +110,7 @@
       const desc = document.querySelector(".problem-desc");
       const timer = document.querySelector(".timer");
 
+      
       socket.on("question", (titleServer, descServer, pointsServer) => {
         title.innerHTML = titleServer;
         desc.innerHTML = descServer;
@@ -172,8 +171,8 @@
 
       const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
 
-      socket.on('updateInfo',(list)=>{
-        console.log(list);
+      socket.on('updateInfo',(list,teamPoints)=>{
+        selected_problems_inner_ctr.innerHTML=""
         list.forEach(element => {
           selected_problems_inner_ctr.innerHTML+=
           `<div class="selected-problem-ctr">
@@ -181,6 +180,18 @@
                 <span class="selected-problem-owner">${element.owner}</span>
               </div>`
         });
+
+        console.log(teamPoints);
+
+        console.log('<%=userData.teamCode %>');
+
+        const teamPoint=teamPoints.find((data)=>{
+          return data.team=='<%=userData.teamCode %>'
+        })
+
+        const purse_points= document.querySelector('.purse-points')
+        console.log(teamPoint);
+        purse_points.innerHTML=teamPoint.points
       })
     </script>
   </body>
