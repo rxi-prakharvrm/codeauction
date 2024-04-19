@@ -59,6 +59,18 @@ body {
     border-radius: 100%;
 }
 
+.du-logo-ctr {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.du-logo {
+    width: 6rem;
+    margin-right: 1rem;
+}
+
 .points-ctr {
     display: flex;
     justify-content: space-between;
