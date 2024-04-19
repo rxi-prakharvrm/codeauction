@@ -148,8 +148,9 @@ app.post('/login', async (req, res) => {
 
     if (authResult.success) {
         const loginTeamData = await teamData.findOne({team:userData.teamCode})
-
-        res.render('home', {userData:userData,loginTeamData})
+        const list= await questionBank.find({})
+        const newList=list.filter(question=>question.owner!=null)
+        res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
     }
     else {
         res.send(authResult.message)
