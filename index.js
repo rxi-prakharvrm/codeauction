@@ -19,7 +19,7 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('./public'))
 
-var bidData = { index: null, statement: "", teamCode: null, amount: 0 };
+var bidData = { index: null, title: "", teamCode: null, amount: 0 };
 
 io.on('connection', (socket) => {
     socket.on('host', async (index) => {
@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
             title = question.title
             points = question.points
             desc = question.desc
-            bidData.statement = title
+            bidData.title = title
         }
         console.log(title);
 
@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
                 console.log('updating');
                 const updated = await teamData.updateOne({ team: bidData.teamCode }, {
                     $set: { points: Number(team_Data.points) - Number(bidData.amount)},
-                    $push: { questions: bidData.statement }
+                    $push: { questions: bidData.title }
                 })
                 console.log(updated);
                 //getting all team vs points
