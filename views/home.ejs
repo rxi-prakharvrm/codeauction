@@ -133,14 +133,22 @@
         biddingStartPopUp.display = "flex";
       }
 
-      setTimeout(showPopUp, 3000);
+      function hidePopUp() {        
+        biddingStartPopUp.display = "none";
+      }
 
 
       //user points
       let user_points=`<%=points %>`
       
       socket.on("question", (titleServer, descServer, tagServer) => {
+
+        
+        showPopUp();
+        setTimeout(hidePopUp, 3000);
+
         console.log(tagServer,descServer,tagServer);
+
         title.innerHTML = titleServer;
         desc.innerHTML = descServer;
         points.innerHTML = tagServer;
