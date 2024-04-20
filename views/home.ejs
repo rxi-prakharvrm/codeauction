@@ -1,226 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HOME - CODE AUCTION</title>
-    <link rel="stylesheet" href="./css/index.css" />
-  </head>
-  <body>
-    <!-- Header  -->
-    <div class="bidding-start-pop-up">
-      <div class="p">Bidding Start</div>
-    </div>
 
-    <div class="header">
-      <div class="inner-header">
-        <div class="header-team-ctr">
-          <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
-          <div class="team-logo">T</div>
-          <span class="team-id"> <%= userData.teamCode %> </span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOME - CODE AUCTION</title>
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <!-- Header  -->
+  <div class="bidding-start-pop-up">
+    <p>Bidding Started</p>
+  </div>
+
+  <div class="header">
+    <div class="inner-header">
+      <div class="header-team-ctr">
+        <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
+        <div class="team-logo">T</div>
+        <span class="team-id">
+          <%= userData.teamCode %>
+        </span>
+      </div>
+      <div class="logo-ctr">
+        <img src="images/du.png" alt="DU Logo" class="du-logo">
+        <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
+        <h2 class="code-auction-logo">Code Auction</h2>
+      </div>
+      <div class="points-ctr">
+        <div class="total-ctr">
+          <div class="total-title">Total</div>
+          <span class="total-points">200</span>
         </div>
-        <div class="logo-ctr">
-          <img src="images/du.png" alt="DU Logo" class="du-logo">
-          <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
-          <h2 class="code-auction-logo">Code Auction</h2>
-        </div>
-        <div class="points-ctr">
-          <div class="total-ctr">
-            <div class="total-title">Total</div>
-            <span class="total-points">200</span>
-          </div>
-          <div class="purse-ctr">
-            <div class="purse-title">Purse</div>
-            <span class="purse-points"><%=points %></span>
-          </div>
+        <div class="purse-ctr">
+          <div class="purse-title">Purse</div>
+          <span class="purse-points">
+            <%=points %>
+          </span>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Hero Section  -->
+  <!-- Hero Section  -->
 
-    <div class="hero-section">
-      <div class="inner-hero-section">
-        <div class="hero-upper-half-ctr">
-          <div class="selected-problems-outer-ctr">
-            <h2 class="selected-problems-header">Allocated Problems</h2>
-            <div class="selected-problem-header-ctr">
-              <p class="selected-problem-header-title">title</p>
-              <span class="selected-problem-header-owner">owner</span>
-            </div>
-            <div class="selected-problems-inner-ctr">
-            
-              <% titleOwner.forEach(element => { %>
-                <div class="selected-problem-ctr">
-                    <p class="selected-problem"><%= element.title %></p>
-                    <span class="selected-problem-owner"><%= element.owner %></span>
-                </div>
+  <div class="hero-section">
+    <div class="inner-hero-section">
+      <div class="hero-upper-half-ctr">
+        <div class="selected-problems-outer-ctr">
+          <h2 class="selected-problems-header">Allocated Problems</h2>
+          <div class="selected-problem-header-ctr">
+            <p class="selected-problem-header-title">title</p>
+            <span class="selected-problem-header-owner">owner</span>
+          </div>
+          <div class="selected-problems-inner-ctr">
+
+            <% titleOwner.forEach(element=> { %>
+              <div class="selected-problem-ctr">
+                <p class="selected-problem">
+                  <%= element.title %>
+                </p>
+                <span class="selected-problem-owner">
+                  <%= element.owner %>
+                </span>
+              </div>
               <% }); %>
-            
-            
-              
-            </div>
-          </div>
-          <div class="bidding-info-outer-ctr">
-            <h2 class="bidding-info-header">Bidding Info</h2>
-            <div class="bidding-info-inner-ctr">
-              <div class="bidding-info-upper-half-ctr">
-                <div class="remaining-time-ctr">
-                  <h3 class="remaining-time-header">Remaining Time</h3>
-                  <div class="remaining-time-clock">
-                    00:<span class="timer"></span>s
-                  </div>
-                </div>
-                <div class="curr-bid-ctr">
-                  <h3 class="curr-bid-header">Current Bid Info</h3>
-                  <div class="curr-bid-amount">0</div>
-                  <div class="curr-bid-team">Current Bidder</div>
-                </div>
-              </div>
-              <div class="bidding-info-lower-half-ctr">
-                <input
-                  type="number"
-                  min="0"
-                  name="bid-amount"
-                  class="bid-amount"
-                  placeholder="Enter your bid amount"
-                />
-                <input type="button" value="Bid" class="bid-btn" />
-              </div>
-            </div>
+
+
+
           </div>
         </div>
-        <div class="hero-lower-half-ctr">
-          <div class="problem-in-bid-outer-ctr">
-            <h2 class="problem-in-bid-header">Problem in bidding</h2>
-            <div class="problem-in-bid-inner-ctr">
-              <div class="problem-in-bid-points-ctr">
-                <p class="problem-in-bid-points"></p>
-                <p class="problem-in-bid-points-text">Difficulty Level</p>
+        <div class="bidding-info-outer-ctr">
+          <h2 class="bidding-info-header">Bidding Info</h2>
+          <div class="bidding-info-inner-ctr">
+            <div class="bidding-info-upper-half-ctr">
+              <div class="remaining-time-ctr">
+                <h3 class="remaining-time-header">Remaining Time</h3>
+                <div class="remaining-time-clock">
+                  00:<span class="timer"></span>s
+                </div>
               </div>
-              <h2 class="problem-in-bid-title">Waiting for problem...</h2>
+              <div class="curr-bid-ctr">
+                <h3 class="curr-bid-header">Current Bid Info</h3>
+                <div class="curr-bid-amount">0</div>
+                <div class="curr-bid-team">Current Bidder</div>
+              </div>
             </div>
-          </div>
-          <div class="problem-desc-outer-ctr">
-            <h2 class="problem-desc-header">Problem Description</h2>
-            <div class="problem-desc-inner-ctr">
-              <p class="problem-desc">No problem in bid</p>
-              <div class="problem-desc-bottom-overlay"></div>
+            <div class="bidding-info-lower-half-ctr">
+              <input type="number" min="0" name="bid-amount" class="bid-amount" placeholder="Enter your bid amount" />
+              <input type="button" value="Bid" class="bid-btn" />
             </div>
           </div>
         </div>
       </div>
+      <div class="hero-lower-half-ctr">
+        <div class="problem-in-bid-outer-ctr">
+          <h2 class="problem-in-bid-header">Problem in bidding</h2>
+          <div class="problem-in-bid-inner-ctr">
+            <div class="problem-in-bid-points-ctr">
+              <p class="problem-in-bid-points"></p>
+              <p class="problem-in-bid-points-text">Difficulty Level</p>
+            </div>
+            <h2 class="problem-in-bid-title">Waiting for problem...</h2>
+          </div>
+        </div>
+        <div class="problem-desc-outer-ctr">
+          <h2 class="problem-desc-header">Problem Description</h2>
+          <div class="problem-desc-inner-ctr">
+            <p class="problem-desc">No problem in bid</p>
+            <div class="problem-desc-bottom-overlay"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      const socket = io();
-      const points = document.querySelector(".problem-in-bid-points");
-      const title = document.querySelector(".problem-in-bid-title");
-      const desc = document.querySelector(".problem-desc");
-      const timer = document.querySelector(".timer");
-      
-      const inputBidBtn = document.querySelector(".bid-btn");
-      const currBidAmount = document.querySelector(".curr-bid-amount");
-      const inputBidAmount = document.querySelector(".bid-amount");
-      const purse_points= document.querySelector('.purse-points') 
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
 
 
-      const curr_bid_team = document.querySelector('.curr-bid-team')
+    // Disable right-click
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-      const biddingStartPopUp = document.querySelector(".bidding-start-pop-up");
+    function ctrlShiftKey(e, keyCode) {
+      return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+    }
 
-      function showPopUp() {        
-        biddingStartPopUp.display = "flex";
-      }
+    document.onkeydown = (e) => {
+      // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+      if (
+        event.keyCode === 123 ||
+        ctrlShiftKey(e, 'I') ||
+        ctrlShiftKey(e, 'J') ||
+        ctrlShiftKey(e, 'C') ||
+        (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+      )
+        return false;
+    };
 
-      function hidePopUp() {        
-        biddingStartPopUp.display = "none";
-      }
+    const socket = io();
+    const points = document.querySelector(".problem-in-bid-points");
+    const title = document.querySelector(".problem-in-bid-title");
+    const desc = document.querySelector(".problem-desc");
+    const timer = document.querySelector(".timer");
+
+    const inputBidBtn = document.querySelector(".bid-btn");
+    const currBidAmount = document.querySelector(".curr-bid-amount");
+    const inputBidAmount = document.querySelector(".bid-amount");
+    const purse_points = document.querySelector('.purse-points')
 
 
-      //user points
-      let user_points=`<%=points %>`
-      
-      socket.on("question", (titleServer, descServer, tagServer) => {
+    const curr_bid_team = document.querySelector('.curr-bid-team')
 
-        
-        showPopUp();
-        setTimeout(hidePopUp, 3000);
+    const biddingStartPopUp = document.querySelector(".bidding-start-pop-up");
 
-        console.log(tagServer,descServer,tagServer);
+    function showPopUp() {
+      biddingStartPopUp.style.display = "flex";
+    }
 
-        title.innerHTML = titleServer;
-        desc.innerHTML = descServer;
-        points.innerHTML = tagServer;
-        currBidAmount.innerHTML='0'
-        curr_bid_team.innerHTML=''
-        function startCountdown() {
-          let countdown = 20;
+    function hidePopUp() {
+      biddingStartPopUp.style.display = "none";
+    }
+
+
+    //user points
+    let user_points = `<%=points %>`
+
+    socket.on("question", (titleServer, descServer, tagServer) => {
+
+
+      showPopUp();
+      setTimeout(hidePopUp, 2000);
+
+      console.log(tagServer, descServer, tagServer);
+
+      title.innerHTML = titleServer;
+      desc.innerHTML = descServer;
+      points.innerHTML = tagServer;
+      currBidAmount.innerHTML = '0'
+      curr_bid_team.innerHTML = ''
+      function startCountdown() {
+        let countdown = 20;
+        timer.innerHTML = countdown;
+
+        let countDownTimer = setInterval(() => {
+          countdown--;
           timer.innerHTML = countdown;
 
-          let countDownTimer = setInterval(() => {
-            countdown--;
-            timer.innerHTML = countdown;
+          socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
+            title.innerHTML = titleDefault;
+            desc.innerHTML = descDefault;
+            points.innerHTML = pointsDefault;
 
-            socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
-                title.innerHTML = titleDefault;
-                desc.innerHTML = descDefault;
-                points.innerHTML = pointsDefault;
+            countdown = 0;
+            clearInterval(countDownTimer);
+          })
 
-                countdown = 0;
-                clearInterval(countDownTimer);
-            })
+          if (countdown <= 0) {
+            clearInterval(countDownTimer);
+            console.log("Time's up!");
+            timer.innerHTML = "00";
+            title.innerHTML = "Waiting for problem...";
+            points.innerHTML = null;
+            desc.innerHTML = "No problem in bid";
+            inputBidBtn.disable = true;
+            currBidAmount.innerHTML = '';
+            curr_bid_team.innerHTML = '';
+            socket.emit("timeUp");
+          }
+        }, 1000);
+      }
 
-            if (countdown <= 0) {
-              clearInterval(countDownTimer);
-              console.log("Time's up!");
-              timer.innerHTML = "00";
-              title.innerHTML = "Waiting for problem...";
-              points.innerHTML = null;
-              desc.innerHTML = "No problem in bid";
-              inputBidBtn.disable = true;
-              currBidAmount.innerHTML = '';
-              curr_bid_team.innerHTML='';
-              socket.emit("timeUp");
-            }
-          }, 1000);
-        }
-
-        startCountdown();
-      });
+      startCountdown();
+    });
 
 
-      const pursePoints = document.querySelector('.purse-points');
-      inputBidBtn.addEventListener("click", () => {
-        var curr = currBidAmount.innerHTML;
-        var inputBid = inputBidAmount.value;
-        if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
-          socket.emit("bid", "<%=userData.teamCode %>", inputBid);
-        }
-      });
+    const pursePoints = document.querySelector('.purse-points');
+    inputBidBtn.addEventListener("click", () => {
+      var curr = currBidAmount.innerHTML;
+      var inputBid = inputBidAmount.value;
+      if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
+        socket.emit("bid", "<%=userData.teamCode %>", inputBid);
+      }
+    });
 
-      socket.on("currBidData", (newTeamCode, newBidAmount) => {
-        currBidAmount.innerHTML = newBidAmount;
-        curr_bid_team.innerHTML=newTeamCode
+    socket.on("currBidData", (newTeamCode, newBidAmount) => {
+      currBidAmount.innerHTML = newBidAmount;
+      curr_bid_team.innerHTML = newTeamCode
 
-      });
+    });
 
-      const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
+    const selected_problems_inner_ctr = document.querySelector('.selected-problems-inner-ctr')
 
-      socket.on('updateInfo',(bidData_title,bidData_teamCode,bidData_amount)=>{
-        console.log(bidData_title);
-          selected_problems_inner_ctr.innerHTML+=
-          `<div class="selected-problem-ctr">
+    socket.on('updateInfo', (bidData_title, bidData_teamCode, bidData_amount) => {
+      console.log(bidData_title);
+      selected_problems_inner_ctr.innerHTML +=
+        `<div class="selected-problem-ctr">
                 <p class="selected-problem">${bidData_title}</p>
                 <span class="selected-problem-owner">${bidData_teamCode}</span>
               </div>`
 
-        if(bidData_teamCode=='<%=userData.teamCode %>'){
-          user_points-=Number(bidData_amount);
-          console.log('user points are',user_points);
-          purse_points.innerHTML=user_points
-        }
-      })
-    </script>
-  </body>
+      if (bidData_teamCode == '<%=userData.teamCode %>') {
+        user_points -= Number(bidData_amount);
+        console.log('user points are', user_points);
+        purse_points.innerHTML = user_points
+      }
+    })
+  </script>
+</body>
+
 </html>

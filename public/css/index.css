@@ -23,14 +23,21 @@ body {
 }
 
 .bidding-start-pop-up {
-    padding: 2rem;
+    padding: 3rem;
     position: fixed;
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #09102F;
+    background-color: #d9d9d9;
     top: 0;
-    left: 50%;
+    left: 68%;
     transform: translateX(-50%);
     display: none;
     justify-content: center;
     align-items: center;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 10px #757575;
+    transition: .5s ease-in-out;
 }
 
 .header {
@@ -470,7 +477,7 @@ gap: 2rem;
 .bottom {
     margin-top: 2rem;
     text-align: center;
-    color: white;
+    color: #20345A;
 }
 
 .bottom>* {
