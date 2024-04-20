@@ -8,6 +8,9 @@
   </head>
   <body>
     <!-- Header  -->
+    <div class="bidding-start-pop-up">
+      <div class="p">Bidding Start</div>
+    </div>
 
     <div class="header">
       <div class="inner-header">
@@ -119,6 +122,14 @@
       const currBidAmount = document.querySelector(".curr-bid-amount");
       const inputBidAmount = document.querySelector(".bid-amount");
       const purse_points= document.querySelector('.purse-points') 
+
+      const biddingStartPopUp = document.querySelector(".bidding-start-pop-up");
+
+      function showPopUp() {        
+        biddingStartPopUp.display = "flex";
+      }
+
+      setTimeout(showPopUp, 3000);
 
       //user points
       let user_points=`<%=points %>`
