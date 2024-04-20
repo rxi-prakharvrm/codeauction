@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
 })
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/signup.html')
+    res.sendFile(__dirname + '/public/rules.html')
 })
 
 app.get('/admin', (req, res) => {

@@ -473,7 +473,19 @@ gap: 2rem;
     margin: 0 auto;
     cursor: pointer;
 }
-
+#submitRules{
+    display: block;
+    width: 10rem;
+    height: 4.2rem;
+    background-color: #20345A;
+    color: white;
+    padding: 1rem;
+    margin: 2rem auto;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    
+}
 .bottom {
     margin-top: 2rem;
     text-align: center;
