@@ -491,6 +491,33 @@ gap: 2rem;
 
 /* ====================== Rules =========================== */
 
+.rules{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: #D9D9D9;
+    padding: 4.5rem;
+    border-radius: 20px;
+    width: 80vw;
+    margin: auto;
+    margin-top: 100px;
+}
+h1{
+    text-decoration: solid;
+    text-decoration-line: underline;
+}
+.rul{
+    margin-top: 50px;
+}
+.rul ol{
+    font-size: 25px;
+    text-align: left;
+}
+li{
+    margin-left: 10px;
+}
+
 /* ======================= Custom Scrollbar ====================== */
 
 /* width */
