@@ -120,23 +120,23 @@
 
 
     // Disable right-click
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    // document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    function ctrlShiftKey(e, keyCode) {
-      return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
-    }
+    // function ctrlShiftKey(e, keyCode) {
+    //   return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+    // }
 
-    document.onkeydown = (e) => {
-      // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
-      if (
-        event.keyCode === 123 ||
-        ctrlShiftKey(e, 'I') ||
-        ctrlShiftKey(e, 'J') ||
-        ctrlShiftKey(e, 'C') ||
-        (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
-      )
-        return false;
-    };
+    // document.onkeydown = (e) => {
+    //   // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+    //   if (
+    //     event.keyCode === 123 ||
+    //     ctrlShiftKey(e, 'I') ||
+    //     ctrlShiftKey(e, 'J') ||
+    //     ctrlShiftKey(e, 'C') ||
+    //     (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+    //   )
+    //     return false;
+    // };
 
     const socket = io();
     const points = document.querySelector(".problem-in-bid-points");
@@ -162,13 +162,20 @@
       biddingStartPopUp.style.display = "none";
     }
 
+    function disableBidBtn() {
+      inputBidBtn.disable = "true";
+    }
+
+    function enableBidBtn() {
+      inputBidBtn.disable = "false";
+    }
 
     //user points
     let user_points = `<%=points %>`
 
     socket.on("question", (titleServer, descServer, tagServer) => {
 
-
+      enableBidBtn();
       showPopUp();
       setTimeout(hidePopUp, 2000);
 
@@ -180,7 +187,7 @@
       currBidAmount.innerHTML = '0'
       curr_bid_team.innerHTML = ''
       function startCountdown() {
-        let countdown = 20;
+        let countdown = 30;
         timer.innerHTML = countdown;
 
         let countDownTimer = setInterval(() => {
@@ -188,6 +195,7 @@
           timer.innerHTML = countdown;
 
           socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
+            disableBidBtn();
             title.innerHTML = titleDefault;
             desc.innerHTML = descDefault;
             points.innerHTML = pointsDefault;
@@ -199,7 +207,7 @@
           if (countdown <= 0) {
             clearInterval(countDownTimer);
             console.log("Time's up!");
-            timer.innerHTML = "00";
+            timer.innerHTML = "";
             title.innerHTML = "Waiting for problem...";
             points.innerHTML = null;
             desc.innerHTML = "No problem in bid";
@@ -220,6 +228,7 @@
       var curr = currBidAmount.innerHTML;
       var inputBid = inputBidAmount.value;
       if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
+        console.log("sending bid");
         socket.emit("bid", "<%=userData.teamCode %>", inputBid);
       }
     });
@@ -233,6 +242,9 @@
     const selected_problems_inner_ctr = document.querySelector('.selected-problems-inner-ctr')
 
     socket.on('updateInfo', (bidData_title, bidData_teamCode, bidData_amount) => {
+
+      disableBidBtn();
+      console.log("NEW BID DATT",bidData_title,bidData_teamCode,bidData_amount);
       console.log(bidData_title);
       selected_problems_inner_ctr.innerHTML +=
         `<div class="selected-problem-ctr">
