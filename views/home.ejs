@@ -225,7 +225,7 @@
     });
 
     socket.on("currBidData", (newTeamCode, newBidAmount) => {
-      currBidAmount.innerHTML = newBidAmount;
+      currBidAmount.innerHTML = Number(newBidAmount);
       curr_bid_team.innerHTML = newTeamCode
 
     });
