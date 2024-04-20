@@ -195,12 +195,14 @@
           timer.innerHTML = countdown;
 
           socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
+            console.log("inside abort");
             disableBidBtn();
             title.innerHTML = titleDefault;
             desc.innerHTML = descDefault;
             points.innerHTML = pointsDefault;
 
             countdown = 0;
+            timer.innerHTML = countdown;
             clearInterval(countDownTimer);
           })
 
