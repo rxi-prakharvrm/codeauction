@@ -32,17 +32,17 @@ io.on('connection', (socket) => {
 
         var question = await questionBank.findOne({ index: idx })
         var title = 'Waiting for problem...';
-        var points = null
+        var tag = null
         var desc = "No problem in bid"
         if (question != null) {
             title = question.title
-            points = question.points
+            tag = question.tag
             desc = question.desc
             bidData.title = title
         }
         console.log(title);
 
-        io.emit('question', title, desc, points);
+        io.emit('question', title, desc, tag);
     })
 
     socket.on('bid', (teamCode, amount) => {
@@ -77,7 +77,7 @@ io.on('connection', (socket) => {
         try {
             const team_Data=await teamData.findOne({team:bidData.teamCode})
 
-            console.log("prrinting",team_Data);
+            console.log("printing",team_Data);
             if (team_Data) {
                 console.log('updating');
                 const updated = await teamData.updateOne({ team: bidData.teamCode }, {
@@ -85,11 +85,8 @@ io.on('connection', (socket) => {
                     $push: { questions: bidData.title }
                 })
                 console.log(updated);
-                //getting all team vs points
-                const teamPoints= await teamData.find({})
-                console.log(teamPoints);
-            
-                io.emit('updateInfo',newList,teamPoints)
+                //getting all team vs points        
+                io.emit('updateInfo',bidData.title,bidData.teamCode,bidData.amount)
             }
         }
         catch (err) {
@@ -148,6 +145,7 @@ app.post('/login', async (req, res) => {
 
     if (authResult.success) {
         const loginTeamData = await teamData.findOne({team:userData.teamCode})
+        console.log(loginTeamData);
         const list= await questionBank.find({})
         const newList=list.filter(question=>question.owner!=null)
         res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
