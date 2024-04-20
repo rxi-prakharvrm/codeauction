@@ -375,10 +375,18 @@ body {
     margin-right: 1rem;
 }
 
+.left-inner{
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+gap: 2rem;
+}
 .left-text {
     width: 100%;
     font-size: 15rem;
-    text-align: center;
+    text-align: left;
+    line-height: 10rem;
     font-family: "Jersey 15", sans-serif;
 }
 
@@ -393,7 +401,7 @@ body {
 .right-box {
     width: 70%;
     padding: 4rem;
-    background-color: #828C9C;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -427,7 +435,14 @@ body {
     padding: 2rem 1rem;
     font-size: 1.8rem;
     outline: none;
-    border: none;
+    border: 0.1rem solid rgba(120, 120, 120, 0.3);
+    transition: box-shadow 0.1s linear, border-color 0.1s linear;
+}
+
+.login-input:hover, .signup-input:hover {
+    box-shadow: 0.2rem 0.2rem 0.5rem rgba(0,0,0,0.2);
+    border-color: #fff;
+    /* border: none; */
 }
 
 #submit {
