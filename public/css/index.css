@@ -22,6 +22,17 @@ body {
   background: linear-gradient(to right, #2b4162, #041046, #2b4162);
 }
 
+.bidding-start-pop-up {
+    padding: 2rem;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
 .header {
     width: 100vw;
     height: 12rem;
