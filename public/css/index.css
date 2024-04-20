@@ -247,6 +247,10 @@ body {
     align-items: center;
     background-color: #d9d9d9;
     border-radius: 1rem;
+    
+}
+.curr-bid-team{
+    font-weight: 600;
 }
 
 .remaining-time-header, .curr-bid-header {

@@ -49,7 +49,7 @@
             
               <% titleOwner.forEach(element => { %>
                 <div class="selected-problem-ctr">
-                    <p class="selected-problem"><%= element.statement %></p>
+                    <p class="selected-problem"><%= element.title %></p>
                     <span class="selected-problem-owner"><%= element.owner %></span>
                 </div>
               <% }); %>
@@ -69,8 +69,9 @@
                   </div>
                 </div>
                 <div class="curr-bid-ctr">
-                  <h3 class="curr-bid-header">Current Bid</h3>
+                  <h3 class="curr-bid-header">Current Bid Info</h3>
                   <div class="curr-bid-amount">0</div>
+                  <div class="curr-bid-team">Current Bidder</div>
                 </div>
               </div>
               <div class="bidding-info-lower-half-ctr">
@@ -120,16 +121,19 @@
       const inputBidAmount = document.querySelector(".bid-amount");
       const purse_points= document.querySelector('.purse-points') 
 
+      const curr_bid_team = document.querySelector('.curr-bid-team')
       //user points
       let user_points=`<%=points %>`
       
       socket.on("question", (titleServer, descServer, tagServer) => {
+        console.log(tagServer,descServer,tagServer);
         title.innerHTML = titleServer;
         desc.innerHTML = descServer;
         points.innerHTML = tagServer;
         currBidAmount.innerHTML='0'
+        curr_bid_team.innerHTML=''
         function startCountdown() {
-          let countdown = 59;
+          let countdown = 20;
           timer.innerHTML = countdown;
 
           let countDownTimer = setInterval(() => {
@@ -153,7 +157,8 @@
               points.innerHTML = null;
               desc.innerHTML = "No problem in bid";
               inputBidBtn.disable = true;
-
+              currBidAmount.innerHTML = '';
+              curr_bid_team.innerHTML='';
               socket.emit("timeUp");
             }
           }, 1000);
@@ -174,11 +179,14 @@
 
       socket.on("currBidData", (newTeamCode, newBidAmount) => {
         currBidAmount.innerHTML = newBidAmount;
+        curr_bid_team.innerHTML=newTeamCode
+
       });
 
       const selected_problems_inner_ctr=document.querySelector('.selected-problems-inner-ctr')
 
       socket.on('updateInfo',(bidData_title,bidData_teamCode,bidData_amount)=>{
+        console.log(bidData_title);
           selected_problems_inner_ctr.innerHTML+=
           `<div class="selected-problem-ctr">
                 <p class="selected-problem">${bidData_title}</p>
