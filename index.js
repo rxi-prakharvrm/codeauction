@@ -107,7 +107,7 @@ app.get('/admin', (req, res) => {
 })
 
 app.get('/signUp', (req, res) => {
-    res.sendFile(__dirname + '/public/signUp.html')
+    res.sendFile(__dirname + '/public/signup.html')
 })
 
 app.post('/signUp', async (req, res) => {
