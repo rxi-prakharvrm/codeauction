@@ -473,7 +473,19 @@ gap: 2rem;
     margin: 0 auto;
     cursor: pointer;
 }
-
+#submitRules{
+    display: block;
+    width: 10rem;
+    height: 4.2rem;
+    background-color: #20345A;
+    color: white;
+    padding: 1rem;
+    margin: 2rem auto;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    
+}
 .bottom {
     margin-top: 2rem;
     text-align: center;
@@ -490,6 +502,33 @@ gap: 2rem;
 }
 
 /* ====================== Rules =========================== */
+
+.rules{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: #D9D9D9;
+    padding: 4.5rem;
+    border-radius: 20px;
+    width: 80vw;
+    margin: auto;
+    margin-top: 100px;
+}
+h1{
+    text-decoration: solid;
+    text-decoration-line: underline;
+}
+.rul{
+    margin-top: 50px;
+}
+.rul ol{
+    font-size: 25px;
+    text-align: left;
+}
+li{
+    margin-left: 10px;
+}
 
 /* ======================= Custom Scrollbar ====================== */
 

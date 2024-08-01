@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
             desc = question.desc
             bidData.title = title
         }
-        console.log(title);
+     
 
         io.emit('question', title, desc, tag);
     })
@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
         if (Number(amount) > bidData.amount) {
             bidData.teamCode = teamCode;
             bidData.amount = amount
-            console.log(bidData);
+          
             io.emit('currBidData', bidData.teamCode, bidData.amount);
         }
     })
@@ -68,23 +68,23 @@ io.on('connection', (socket) => {
     })
 
     socket.on('update-user-data', async () => {
+        console.log("1");
         await questionBank.updateOne({ index: bidData.index}, { $set: { owner: bidData.teamCode } })
         const list= await questionBank.find({})
-        const newList=list.filter(question=>question.owner!=null)
-      
-        console.log(newList);
-        console.log(bidData);
+        // const newList=list.filter(question=>question.owner!=null)
+     
         try {
+            console.log("2");
             const team_Data=await teamData.findOne({team:bidData.teamCode})
 
-            console.log("printing",team_Data);
+          
             if (team_Data) {
-                console.log('updating');
+               
                 const updated = await teamData.updateOne({ team: bidData.teamCode }, {
                     $set: { points: Number(team_Data.points) - Number(bidData.amount)},
                     $push: { questions: bidData.title }
                 })
-                console.log(updated);
+                console.log("3");
                 //getting all team vs points        
                 io.emit('updateInfo',bidData.title,bidData.teamCode,bidData.amount)
             }
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
 })
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/signup.html')
+    res.sendFile(__dirname + '/public/rules.html')
 })
 
 app.get('/admin', (req, res) => {
@@ -107,7 +107,7 @@ app.get('/admin', (req, res) => {
 })
 
 app.get('/signUp', (req, res) => {
-    res.sendFile(__dirname + '/public/signUp.html')
+    res.sendFile(__dirname + '/public/signup.html')
 })
 
 app.post('/signUp', async (req, res) => {
@@ -145,7 +145,7 @@ app.post('/login', async (req, res) => {
 
     if (authResult.success) {
         const loginTeamData = await teamData.findOne({team:userData.teamCode})
-        console.log(loginTeamData);
+        //console.log(loginTeamData);
         const list= await questionBank.find({})
         const newList=list.filter(question=>question.owner!=null)
         res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
