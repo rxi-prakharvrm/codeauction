@@ -2,7 +2,7 @@
 
 Welcome to **Code Auction**, a dynamic and interactive platform created for the tech fest at DUCS! Developed in a whirlwind timeframe of just 5 to 7 days, our website combines the power of modern web technologies to deliver a seamless and engaging experience.
 
-Check it out live [here](https://codeauction.onrender.com/).
+Check it out live [here](https://www.codeauction.onrender.com).
 
 ## Project Purpose 🎯
 
@@ -33,3 +33,21 @@ The primary goal of this project is to facilitate live bidding for DSA (Data Str
 - **Collaborative Effort**: Built by a dedicated team of developers under the guidance of our seniors, showcasing the power of teamwork and efficient project management.
 - **Tech Fest Showcase**: Proudly presented at the tech fest in DUCS, demonstrating innovation and technical proficiency.
 - **Hosted on Render**: The project is live and hosted on Render.com.
+
+## Screenshots 🖼️
+
+### Rules Page
+
+![Rules Page](screenshots/rules.png)
+
+### Signup Page
+
+![Signup Page](screenshots/signup.png)
+
+### Login Page
+
+![Login Page](screenshots/login.png)
+
+### Dashboard Page
+
+![Dashboard Page](screenshots/dashboard.png)
