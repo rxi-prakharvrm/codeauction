@@ -2,7 +2,7 @@
 
 Welcome to **Code Auction**, a dynamic and interactive platform created for the tech fest at DUCS! Developed in a whirlwind timeframe of just 5 to 7 days, our website combines the power of modern web technologies to deliver a seamless and engaging experience.
 
-Check it out live [here](https://www.codeauction.onrender.com).
+Check it out live [here](https://codeauction.onrender.com/).
 
 ## Project Purpose 🎯
 
