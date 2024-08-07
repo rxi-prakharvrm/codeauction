@@ -2,7 +2,6 @@ const {hostData}=require("../mongodb")
 async function authenticateHost(user){
     
     try{
-
         const findUser = await hostData.findOne({username:user.username})
         if(!findUser || user.password!=findUser.password){
             return {success:false,message:"invalid creadentials"}
@@ -10,7 +9,7 @@ async function authenticateHost(user){
         return {success:true,message:"valid credentials"}
     }
     catch(error){
-        return {success:fasle,message:"interval server error"}
+        return {success:false,message:"interval server error"}
     }
 }   
 
