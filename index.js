@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require('express')
 const { createServer } = require('http')
+const cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
 const app = express()
 
 const server = createServer(app);
@@ -14,10 +16,12 @@ const { userData, hostData, questionBank, teamData } = require('./src/mongodb')
 const { authenticateUser } = require('./src/logic/authenticateUser')
 const { authenticateHost } = require('./src/logic/authenticateHost')
 const { validUsername } = require('./src/logic/validUsername')
+const verifyUser = require('./src/logic/verifyUser')
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('./public'))
+app.use(cookieParser())
 
 var bidData = { index: null, title: "", teamCode: null, amount: 0 };
 
@@ -120,8 +124,16 @@ app.post('/signUp', async (req, res) => {
 
     const check = await validUsername(data)
     if (check.success) {
+        
+        try{
+            const hashedPassword = await bcrypt.hash(data.password,10)
+            data.password = hashedPassword
+        }catch(error){
+            res.json({msg:"error hashing password"})
+        }
+
         await userData.insertMany([data])
-        await teamData.insertMany({team:data.teamCode,})
+        await teamData.insertMany({team:data.teamCode})
         res.sendFile(__dirname + '/public/login.html');
     }
     else {
@@ -130,7 +142,7 @@ app.post('/signUp', async (req, res) => {
 
 })
 
-let teamCode;
+// let teamCode;
 
 app.get('/login',(req,res)=>{
     res.sendFile(__dirname + '/public/login.html');
@@ -141,36 +153,38 @@ app.post('/login', async (req, res) => {
         username: req.body.username,
         password: req.body.password
     }
-    const authResult = await authenticateUser(userData);
+    const authResult = await authenticateUser(userData,req,res);
 
     if (authResult.success) {
-        const loginTeamData = await teamData.findOne({team:userData.teamCode})
-        //console.log(loginTeamData);
-        const list= await questionBank.find({})
-        const newList=list.filter(question=>question.owner!=null)
-        res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+        // const loginTeamData = await teamData.findOne({team:userData.teamCode})
+        // //console.log(loginTeamData);
+        // const list= await questionBank.find({})
+        // const newList=list.filter(question=>question.owner!=null)
+        // res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+
+        res.redirect('./home')
     }
     else {
         res.send(authResult.message)
     }
 })
 
-// app.get('/home', async (req, res) => {
-//     const teamData = {
-//         totalPoints: 20,
-//         purse: 12,
-//         remainingTime: 59,
-//         currBidAmount: 6,
-//         problemPoints: 4,
-//         problemTitle: "Find minimum in rotated sorted array",
-//         problemDesc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets  Aldus PageMaker including versions of Lorem Ipsum."
-//     }
+app.get('/logout',(req,res)=>{
+    res.clearCookie('token')
 
-//     res.render('home', {
-//         teamCode,
-//         teamData
-//     });
-// })
+    res.redirect('/login')
+})
+
+app.get('/home',verifyUser, async (req,res)=>{
+
+    const  userData = req.user
+    const loginTeamData = await teamData.findOne({team:userData.teamCode})
+
+    const list= await questionBank.find({})
+    const newList=list.filter(question=>question.owner!=null)
+    res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+
+})
 
 app.get('/hostLogin', (req, res) => {
     res.render('./hostLogin')
