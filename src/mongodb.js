@@ -1,8 +1,4 @@
 const mongoose= require('mongoose')
-
-
-// mongoose.connect('mongodb://localhost:27017/CodeAuction')
-
 const db = process.env.MONGO_URI;
 
 mongoose.connect(db).then(() => {
