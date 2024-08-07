@@ -1,14 +1,11 @@
 const mongoose= require('mongoose')
 
+const db = process.env.MONGO_URI;
 
-mongoose.connect('mongodb://localhost:27017/CodeAuction')
-
-// const db = process.env.MONGO_URI;
-
-// mongoose.connect(db).then(() => {
-//     mongoose.set('strictQuery', false);
-//     console.log("Connection successful!")
-// }).catch((err) => console.log("Error connecting to MongoDB:", err));
+mongoose.connect(db).then(() => {
+    mongoose.set('strictQuery', false);
+    console.log("Connection successful!")
+}).catch((err) => console.log("Error connecting to MongoDB:", err));
 
 
 const user= new mongoose.Schema({
