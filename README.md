@@ -33,21 +33,26 @@ The primary goal of this project is to facilitate live bidding for DSA (Data Str
 - **Collaborative Effort**: Built by a dedicated team of developers under the guidance of our seniors, showcasing the power of teamwork and efficient project management.
 - **Tech Fest Showcase**: Proudly presented at the tech fest in DUCS, demonstrating innovation and technical proficiency.
 - **Hosted on Render**: The project is live and hosted on Render.com.
+  
+### Demo Presentation
+https://github.com/user-attachments/assets/c9a56b49-deb2-4434-b0c1-8b1a8bbeb4d3
 
 ## Screenshots 🖼️
 
 ### Rules Page
+![rules](https://github.com/user-attachments/assets/a6cf6b0b-8b3f-4dba-8c2b-8c69c8c1cd7d)
 
-![Rules Page](screenshots/rules.png)
 
 ### Signup Page
+![signUp](https://github.com/user-attachments/assets/fb85b61a-be87-4781-82f8-2d3f6202b05f)
 
-![Signup Page](screenshots/signup.png)
 
 ### Login Page
+![login](https://github.com/user-attachments/assets/99230e99-cf4c-461b-8116-6b0a8885990d)
 
-![Login Page](screenshots/login.png)
 
 ### Dashboard Page
+![dashboard](https://github.com/user-attachments/assets/1270accf-2c6e-4c9e-b621-e3743ae54f83)
 
-![Dashboard Page](screenshots/dashboard.png)
+
+
