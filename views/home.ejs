@@ -1,266 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HOME - CODE AUCTION</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HOME - CODE AUCTION</title>
-  <link rel="stylesheet" href="./css/index.css" />
-</head>
+  <body>
+    <!-- Header  -->
+    <div class="pop-up bidding-start-pop-up">
+      <p>Bidding Started</p>
+    </div>
 
-<body>
-  <!-- Header  -->
-  <div class="bidding-start-pop-up">
-    <p>Bidding Started</p>
-  </div>
+    <div class="pop-up invalid-bid-pop-up">
+      <p>Invalid Bid</p>
+    </div>
 
-  <div class="header">
-    <div class="inner-header">
-      <div class="header-team-ctr">
-        <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
-        <div class="team-logo">T</div>
-        <span class="team-id">
-          <%= userData.teamCode %>
-        </span>
-      </div>
-      <div class="logo-ctr">
-        <img src="images/du.png" alt="DU Logo" class="du-logo">
-        <img src="images/sankalan-logo.png" alt="Sankalan Logo" class="sankalan-logo">
-        <h2 class="code-auction-logo">Code Auction</h2>
-      </div>
-      <div class="points-ctr">
-        <div class="total-ctr">
-          <div class="total-title">Total</div>
-          <span class="total-points">200</span>
+    <div class="pop-up congratulations-pop-up">
+      <p>Congratulations! You have successfully bid on the problem</p>
+    </div>
+
+    <div class="pop-up bid-goes-to-pop-up">
+      <p>Your bid goes to another team</p>
+    </div>
+
+    <div class="header">
+      <div class="inner-header">
+        <div class="header-team-ctr">
+          <!-- <img src="./images/team.png" alt="Team logo" class="team-logo"> -->
+          <div class="team-logo">T</div>
+          <span class="team-id"> <%= userData.teamCode %> </span>
         </div>
-        <div class="purse-ctr">
-          <div class="purse-title">Purse</div>
-          <span class="purse-points">
-            <%=points %>
-          </span>
+        <div class="logo-ctr">
+          <img src="images/du.png" alt="DU Logo" class="du-logo" />
+          <img
+            src="images/sankalan-logo.png"
+            alt="Sankalan Logo"
+            class="sankalan-logo"
+          />
+          <h2 class="code-auction-logo">Code Auction</h2>
+        </div>
+        <div class="points-ctr">
+          <div class="total-ctr">
+            <div class="total-title">Total</div>
+            <span class="total-points">200</span>
+          </div>
+          <div class="purse-ctr">
+            <div class="purse-title">Purse</div>
+            <span class="purse-points"> <%=points %> </span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Hero Section  -->
-
-  <div class="hero-section">
-    <div class="inner-hero-section">
-      <div class="hero-upper-half-ctr">
-        <div class="selected-problems-outer-ctr">
-          <h2 class="selected-problems-header">Allocated Problems</h2>
-          <div class="selected-problem-header-ctr">
-            <p class="selected-problem-header-title">title</p>
-            <span class="selected-problem-header-owner">owner</span>
-          </div>
-          <div class="selected-problems-inner-ctr">
-
-            <% titleOwner.forEach(element=> { %>
+    <!-- Hero Section  -->
+    <div class="hero-section">
+      <div class="inner-hero-section">
+        <div class="hero-upper-half-ctr">
+          <div class="selected-problems-outer-ctr">
+            <h2 class="selected-problems-header">Allocated Problems</h2>
+            <div class="selected-problem-header-ctr">
+              <p class="selected-problem-header-title">title</p>
+              <span class="selected-problem-header-owner">owner</span>
+            </div>
+            <div class="selected-problems-inner-ctr">
+              <% titleOwner.forEach(element=> { %>
               <div class="selected-problem-ctr">
-                <p class="selected-problem">
-                  <%= element.title %>
-                </p>
+                <p class="selected-problem"><%= element.title %></p>
                 <span class="selected-problem-owner">
                   <%= element.owner %>
                 </span>
               </div>
               <% }); %>
-
-
-
+            </div>
           </div>
-        </div>
-        <div class="bidding-info-outer-ctr">
-          <h2 class="bidding-info-header">Bidding Info</h2>
-          <div class="bidding-info-inner-ctr">
-            <div class="bidding-info-upper-half-ctr">
-              <div class="remaining-time-ctr">
-                <h3 class="remaining-time-header">Remaining Time</h3>
-                <div class="remaining-time-clock">
-                  <span class="timer"></span>s
+
+          <div class="bidding-info-outer-ctr">
+            <h2 class="bidding-info-header">Bidding Info</h2>
+            <div class="bidding-info-inner-ctr">
+              <div class="bidding-info-upper-half-ctr">
+                <div class="remaining-time-ctr">
+                  <h3 class="remaining-time-header">Remaining Time</h3>
+                  <div class="remaining-time-clock">
+                    <span class="timer"></span>s
+                  </div>
+                </div>
+                <div class="curr-bid-ctr">
+                  <h3 class="curr-bid-header">Current Bid Info</h3>
+                  <div class="curr-bid-amount">0</div>
+                  <div class="curr-bid-team">Current Bidder</div>
                 </div>
               </div>
-              <div class="curr-bid-ctr">
-                <h3 class="curr-bid-header">Current Bid Info</h3>
-                <div class="curr-bid-amount">0</div>
-                <div class="curr-bid-team">Current Bidder</div>
+              <div class="bidding-info-lower-half-ctr">
+                <input
+                  type="number"
+                  min="0"
+                  name="bid-amount"
+                  class="bid-amount"
+                  placeholder="Enter your bid amount"
+                />
+                <input type="button" value="Bid" class="bid-btn" />
               </div>
             </div>
-            <div class="bidding-info-lower-half-ctr">
-              <input type="number" min="0" name="bid-amount" class="bid-amount" placeholder="Enter your bid amount" />
-              <input type="button" value="Bid" class="bid-btn" />
+          </div>
+        </div>
+
+        <div class="hero-lower-half-ctr">
+          <div class="problem-in-bid-outer-ctr">
+            <h2 class="problem-in-bid-header">Problem in bidding</h2>
+            <div class="problem-in-bid-inner-ctr">
+              <div class="problem-in-bid-points-ctr">
+                <p class="problem-in-bid-points"></p>
+                <p class="problem-in-bid-points-text">Difficulty Level</p>
+              </div>
+              <h2 class="problem-in-bid-title">Waiting for problem...</h2>
+            </div>
+          </div>
+          <div class="problem-desc-outer-ctr">
+            <h2 class="problem-desc-header">Problem Description</h2>
+            <div class="problem-desc-inner-ctr">
+              <p class="problem-desc">No problem in bid</p>
+              <div class="problem-desc-bottom-overlay"></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="hero-lower-half-ctr">
-        <div class="problem-in-bid-outer-ctr">
-          <h2 class="problem-in-bid-header">Problem in bidding</h2>
-          <div class="problem-in-bid-inner-ctr">
-            <div class="problem-in-bid-points-ctr">
-              <p class="problem-in-bid-points"></p>
-              <p class="problem-in-bid-points-text">Difficulty Level</p>
-            </div>
-            <h2 class="problem-in-bid-title">Waiting for problem...</h2>
-          </div>
-        </div>
-        <div class="problem-desc-outer-ctr">
-          <h2 class="problem-desc-header">Problem Description</h2>
-          <div class="problem-desc-inner-ctr">
-            <p class="problem-desc">No problem in bid</p>
-            <div class="problem-desc-bottom-overlay"></div>
-          </div>
-        </div>
-      </div>
+
     </div>
-  </div>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // Disable right-click
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
 
+      function ctrlShiftKey(e, keyCode) {
+        return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+      }
 
-    // Disable right-click
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
+      document.onkeydown = (e) => {
+        // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+        if (
+          event.keyCode === 123 ||
+          ctrlShiftKey(e, "I") ||
+          ctrlShiftKey(e, "J") ||
+          ctrlShiftKey(e, "C") ||
+          (e.ctrlKey && e.keyCode === "U".charCodeAt(0))
+        )
+          return false;
+      };
 
-    function ctrlShiftKey(e, keyCode) {
-      return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
-    }
+      const socket = io();
+      const points = document.querySelector(".problem-in-bid-points");
+      const title = document.querySelector(".problem-in-bid-title");
+      const desc = document.querySelector(".problem-desc");
+      const timer = document.querySelector(".timer");
 
-    document.onkeydown = (e) => {
-      // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
-      if (
-        event.keyCode === 123 ||
-        ctrlShiftKey(e, 'I') ||
-        ctrlShiftKey(e, 'J') ||
-        ctrlShiftKey(e, 'C') ||
-        (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
-      )
-        return false;
-    };
+      const inputBidBtn = document.querySelector(".bid-btn");
+      const currBidAmount = document.querySelector(".curr-bid-amount");
+      const inputBidAmount = document.querySelector(".bid-amount");
+      const purse_points = document.querySelector(".purse-points");
 
-    const socket = io();
-    const points = document.querySelector(".problem-in-bid-points");
-    const title = document.querySelector(".problem-in-bid-title");
-    const desc = document.querySelector(".problem-desc");
-    const timer = document.querySelector(".timer");
+      const curr_bid_team = document.querySelector(".curr-bid-team");
 
-    const inputBidBtn = document.querySelector(".bid-btn");
-    const currBidAmount = document.querySelector(".curr-bid-amount");
-    const inputBidAmount = document.querySelector(".bid-amount");
-    const purse_points = document.querySelector('.purse-points')
+      const biddingStartPopUp = document.querySelector(".bidding-start-pop-up");
+      const invalidBidPopUp = document.querySelector(".invalid-bid-pop-up");
+      const congratulationsPopUp = document.querySelector(".congratulations-pop-up");
+      const bidGoesToPopUp = document.querySelector(".bid-goes-to-pop-up");
 
+      function disableBidBtn() {
+        inputBidBtn.disable = "true";
+      }
 
-    const curr_bid_team = document.querySelector('.curr-bid-team')
+      function enableBidBtn() {
+        inputBidBtn.disable = "false";
+      }
 
-    const biddingStartPopUp = document.querySelector(".bidding-start-pop-up");
+      //user points
+      let user_points = `<%=points %>`;
 
-    function showPopUp() {
-      biddingStartPopUp.style.display = "flex";
-    }
+      socket.on("question", (titleServer, descServer, tagServer) => {
+        enableBidBtn();
+        
+        // Show bidding started pop-up
+        biddingStartPopUp.style.display = "flex";
+        setTimeout(() => {
+          biddingStartPopUp.style.display = "none";
+        }, 2000);
 
-    function hidePopUp() {
-      biddingStartPopUp.style.display = "none";
-    }
+        // console.log(tagServer, descServer, tagServer);
 
-    function disableBidBtn() {
-      inputBidBtn.disable = "true";
-    }
-
-    function enableBidBtn() {
-      inputBidBtn.disable = "false";
-    }
-
-    //user points
-    let user_points = `<%=points %>`
-
-    socket.on("question", (titleServer, descServer, tagServer) => {
-
-      enableBidBtn();
-      showPopUp();
-      setTimeout(hidePopUp, 2000);
-
-      console.log(tagServer, descServer, tagServer);
-
-      title.innerHTML = titleServer;
-      desc.innerHTML = descServer;
-      points.innerHTML = tagServer;
-      currBidAmount.innerHTML = '0'
-      curr_bid_team.innerHTML = ''
-      function startCountdown() {
-        let countdown = 120;
-        timer.innerHTML = countdown;
-
-        let countDownTimer = setInterval(() => {
-          countdown--;
+        title.innerHTML = titleServer;
+        desc.innerHTML = descServer;
+        points.innerHTML = tagServer;
+        currBidAmount.innerHTML = "0";
+        curr_bid_team.innerHTML = "";
+        function startCountdown() {
+          let countdown = 20;
           timer.innerHTML = countdown;
 
-          socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
-            console.log("inside abort");
-            disableBidBtn();
-            title.innerHTML = titleDefault;
-            desc.innerHTML = descDefault;
-            points.innerHTML = pointsDefault;
-
-            countdown = 0;
+          let countDownTimer = setInterval(() => {
+            countdown--;
             timer.innerHTML = countdown;
-            clearInterval(countDownTimer);
-          })
 
-          if (countdown <= 0) {
-            clearInterval(countDownTimer);
-            console.log("Time's up!");
-            timer.innerHTML = "";
-            title.innerHTML = "Waiting for problem...";
-            points.innerHTML = null;
-            desc.innerHTML = "No problem in bid";
-            inputBidBtn.disable = true;
-            currBidAmount.innerHTML = '';
-            curr_bid_team.innerHTML = '';
-            socket.emit("timeUp");
-          }
-        }, 1000);
-      }
+            socket.on("abort", (titleDefault, descDefault, pointsDefault) => {
+              // console.log("inside abort");
+              disableBidBtn();
+              title.innerHTML = titleDefault;
+              desc.innerHTML = descDefault;
+              points.innerHTML = pointsDefault;
 
-      startCountdown();
-    });
+              countdown = 0;
+              timer.innerHTML = countdown;
+              clearInterval(countDownTimer);
+            });
 
+            if (countdown <= 0) {
+              clearInterval(countDownTimer);
+              // console.log("Time's up!");
+              timer.innerHTML = "";
+              title.innerHTML = "Waiting for problem...";
+              points.innerHTML = null;
+              desc.innerHTML = "No problem in bid";
+              inputBidBtn.disable = true;
+              currBidAmount.innerHTML = "";
+              curr_bid_team.innerHTML = "";
+              socket.emit("timeUp");
+            }
+          }, 1000);
+        }
 
-    const pursePoints = document.querySelector('.purse-points');
-    inputBidBtn.addEventListener("click", () => {
-      var curr = currBidAmount.innerHTML;
-      var inputBid = inputBidAmount.value;
-      if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
-        console.log("sending bid");
-        socket.emit("bid", "<%=userData.teamCode %>", inputBid);
-      }
-    });
+        startCountdown();
+      });
 
-    socket.on("currBidData", (newTeamCode, newBidAmount) => {
-      currBidAmount.innerHTML = Number(newBidAmount);
-      curr_bid_team.innerHTML = newTeamCode
+      const pursePoints = document.querySelector(".purse-points");
 
-    });
+      inputBidBtn.addEventListener("click", () => {
+        var curr = currBidAmount.innerHTML;
+        var inputBid = inputBidAmount.value;
 
-    const selected_problems_inner_ctr = document.querySelector('.selected-problems-inner-ctr')
+        if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
+          // console.log("sending bid");
+          socket.emit("bid", "<%=userData.teamCode %>", inputBid);
+        } else {
+          // Show invalid bid pop-up
+          invalidBidPopUp.style.display = "flex";
+          setTimeout(() => {
+            invalidBidPopUp.style.display = "none";
+          }, 2000);
+        }
+      });
 
-    socket.on('updateInfo', (bidData_title, bidData_teamCode, bidData_amount) => {
+      socket.on("currBidData", (newTeamCode, newBidAmount) => {
+        currBidAmount.innerHTML = Number(newBidAmount);
+        curr_bid_team.innerHTML = newTeamCode;
+      });
 
-      disableBidBtn();
-      console.log("NEW BID DATT",bidData_title,bidData_teamCode,bidData_amount);
-      console.log(bidData_title);
-      selected_problems_inner_ctr.innerHTML +=
-        `<div class="selected-problem-ctr">
+      const selected_problems_inner_ctr = document.querySelector(
+        ".selected-problems-inner-ctr"
+      );
+
+      socket.on("updateInfo", (bidData_title, bidData_teamCode, bidData_amount) => {
+          disableBidBtn();
+          // console.log(
+          //   "NEW BID DATA",
+          //   bidData_title,
+          //   bidData_teamCode,
+          //   bidData_amount
+          // );
+          // console.log(bidData_title);
+          selected_problems_inner_ctr.innerHTML += `<div class="selected-problem-ctr">
                 <p class="selected-problem">${bidData_title}</p>
                 <span class="selected-problem-owner">${bidData_teamCode}</span>
-              </div>`
+              </div>`;
 
-      if (bidData_teamCode == '<%=userData.teamCode %>') {
-        user_points -= Number(bidData_amount);
-        console.log('user points are', user_points);
-        purse_points.innerHTML = user_points
-      }
-    })
-  </script>
-</body>
-
+          if (bidData_teamCode == "<%=userData.teamCode %>") {
+            user_points -= Number(bidData_amount);
+            // console.log("user points are", user_points);
+            purse_points.innerHTML = user_points;
+            congratulationsPopUp.style.display = "flex";
+            setTimeout(() => {
+              congratulationsPopUp.style.display = "none";
+            }, 2000);
+          } else {
+            bidGoesToPopUp.style.display = "flex";
+            setTimeout(() => {
+              bidGoesToPopUp.style.display = "none";
+            }, 2000);
+          }
+        }
+      );
+    </script>
+  </body>
 </html>
