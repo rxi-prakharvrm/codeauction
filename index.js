@@ -3,6 +3,9 @@ require("dotenv").config();
 const express = require('express')
 const { createServer } = require('http')
 
+const cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
+
 // create express app
 const app = express()
 
@@ -23,6 +26,7 @@ const { userData, hostData, questionBank, teamData } = require('./src/mongodb')
 const { authenticateUser } = require('./src/logic/authenticateUser')
 const { authenticateHost } = require('./src/logic/authenticateHost')
 const { validUsername } = require('./src/logic/validUsername')
+const verifyUser = require('./src/logic/verifyUser')
 
 // set view engine to ejs
 app.set('view engine', 'ejs')
@@ -32,6 +36,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // static files
 app.use(express.static('./public'))
+app.use(cookieParser())
 
 var bidData = { index: null, title: "", teamCode: null, amount: 0 };
 
@@ -126,8 +131,16 @@ app.post('/signUp', async (req, res) => {
 
     const check = await validUsername(data)
     if (check.success) {
+        
+        try{
+            const hashedPassword = await bcrypt.hash(data.password,10)
+            data.password = hashedPassword
+        }catch(error){
+            res.json({msg:"error hashing password"})
+        }
+
         await userData.insertMany([data])
-        await teamData.insertMany({team:data.teamCode,})
+        await teamData.insertMany({team:data.teamCode})
         res.sendFile(__dirname + '/public/login.html');
     }
     else {
@@ -145,17 +158,31 @@ app.post('/login', async (req, res) => {
         username: req.body.username,
         password: req.body.password
     }
-    const authResult = await authenticateUser(userData);
+    const authResult = await authenticateUser(userData,req,res);
 
     if (authResult.success) {
-        const loginTeamData = await teamData.findOne({team:userData.teamCode})
-        const list= await questionBank.find({})
-        const newList=list.filter(question=>question.owner!=null)
-        res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+        res.redirect('./home')
     }
     else {
         res.send(authResult.message)
     }
+})
+
+app.get('/logout',(req,res)=>{
+    res.clearCookie('token')
+
+    res.redirect('/login')
+})
+
+app.get('/home',verifyUser, async (req,res)=>{
+
+    const  userData = req.user
+    const loginTeamData = await teamData.findOne({team:userData.teamCode})
+
+    const list= await questionBank.find({})
+    const newList=list.filter(question=>question.owner!=null)
+    res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+
 })
 
 app.get('/hostLogin', (req, res) => {

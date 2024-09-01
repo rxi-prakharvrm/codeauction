@@ -551,3 +551,17 @@ li{
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
   }
+
+  .logout-btn{
+    padding: 1rem 2rem;
+    outline: none;
+    background-color: #d9d9d9;
+    color: #09102F;
+    font-size: 2rem;
+    font-weight: bolder;
+    border-radius: 3rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+  }

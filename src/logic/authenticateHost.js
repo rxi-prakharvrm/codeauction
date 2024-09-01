@@ -9,7 +9,7 @@ async function authenticateHost(user){
         return {success:false,message:"invalid creadentials"}
     }
     catch(error){
-        return {success:fasle,message:"interval server error"}
+        return {success:false,message:"interval server error"}
     }
 }   
 
