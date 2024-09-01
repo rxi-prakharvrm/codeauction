@@ -1,26 +1,41 @@
+// import required modules
 require("dotenv").config();
 const express = require('express')
 const { createServer } = require('http')
+
+// create express app
 const app = express()
 
+// create server
 const server = createServer(app);
+
+// create socket.io server
 const { Server } = require('socket.io')
+
+// create io server
 const io = new Server(server)
 
-io.setMaxListeners(0); // Set maximum listeners to unlimited
+// Set maximum listeners to unlimited
+io.setMaxListeners(0);
 
-
+// import required modules
 const { userData, hostData, questionBank, teamData } = require('./src/mongodb')
 const { authenticateUser } = require('./src/logic/authenticateUser')
 const { authenticateHost } = require('./src/logic/authenticateHost')
 const { validUsername } = require('./src/logic/validUsername')
 
+// set view engine to ejs
 app.set('view engine', 'ejs')
+
+// middleware
 app.use(express.urlencoded({ extended: false }))
+
+// static files
 app.use(express.static('./public'))
 
 var bidData = { index: null, title: "", teamCode: null, amount: 0 };
 
+// socket.io connection
 io.on('connection', (socket) => {
     socket.on('host', async (index) => {
         var idx = Number(index)
@@ -87,8 +102,6 @@ io.on('connection', (socket) => {
             console.log("server side error")
         }
     })
-
-
 })
 
 app.get('/', (req, res) => {
@@ -120,7 +133,6 @@ app.post('/signUp', async (req, res) => {
     else {
         res.send(check.message)
     }
-
 })
 
 app.get('/login',(req,res)=>{
@@ -164,11 +176,6 @@ app.post('/hostLogin', async (req, res) => {
     }
 })
 
-
-
-
 server.listen(3000, () => {
-
     console.log("app started at port 3000");
 })
-
