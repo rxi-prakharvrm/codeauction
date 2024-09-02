@@ -1,48 +1,33 @@
-// import required modules
 require("dotenv").config();
 const express = require('express')
 const { createServer } = require('http')
-
 const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt');
-
-// create express app
 const app = express()
 
-// create server
 const server = createServer(app);
-
-// create socket.io server
 const { Server } = require('socket.io')
-
-// create io server
 const io = new Server(server)
 
-// Set maximum listeners to unlimited
-io.setMaxListeners(0);
+io.setMaxListeners(0); // Set maximum listeners to unlimited
 
-// import required modules
+
 const { userData, hostData, questionBank, teamData } = require('./src/mongodb')
 const { authenticateUser } = require('./src/logic/authenticateUser')
 const { authenticateHost } = require('./src/logic/authenticateHost')
 const { validUsername } = require('./src/logic/validUsername')
 const verifyUser = require('./src/logic/verifyUser')
 
-// set view engine to ejs
 app.set('view engine', 'ejs')
-
-// middleware
 app.use(express.urlencoded({ extended: false }))
-
-// static files
 app.use(express.static('./public'))
 app.use(cookieParser())
 
 var bidData = { index: null, title: "", teamCode: null, amount: 0 };
 
-// socket.io connection
 io.on('connection', (socket) => {
     socket.on('host', async (index) => {
+
         var idx = Number(index)
 
         bidData.index = idx
@@ -53,18 +38,19 @@ io.on('connection', (socket) => {
         var title = 'Waiting for problem...';
         var tag = null
         var desc = "No problem in bid"
-
         if (question != null) {
             title = question.title
             tag = question.tag
             desc = question.desc
             bidData.title = title
-        }     
+        }
+     
 
         io.emit('question', title, desc, tag);
     })
 
-    socket.on('bid', (teamCode, amount) => {        
+    socket.on('bid', (teamCode, amount) => {
+        
         if (Number(amount) > bidData.amount) {
             bidData.teamCode = teamCode;
             bidData.amount = amount
@@ -89,11 +75,15 @@ io.on('connection', (socket) => {
         console.log("1");
         await questionBank.updateOne({ index: bidData.index}, { $set: { owner: bidData.teamCode } })
         const list= await questionBank.find({})
+        // const newList=list.filter(question=>question.owner!=null)
      
         try {
+            console.log("2");
             const team_Data=await teamData.findOne({team:bidData.teamCode})
+
           
-            if (team_Data) {               
+            if (team_Data) {
+               
                 const updated = await teamData.updateOne({ team: bidData.teamCode }, {
                     $set: { points: Number(team_Data.points) - Number(bidData.amount)},
                     $push: { questions: bidData.title }
@@ -106,7 +96,10 @@ io.on('connection', (socket) => {
         catch (err) {
             console.log("server side error")
         }
+
     })
+
+
 })
 
 app.get('/', (req, res) => {
@@ -146,12 +139,14 @@ app.post('/signUp', async (req, res) => {
     else {
         res.send(check.message)
     }
+
 })
+
+// let teamCode;
 
 app.get('/login',(req,res)=>{
     res.sendFile(__dirname + '/public/login.html');
 })
-
 app.post('/login', async (req, res) => {
     const userData = {
         teamCode: req.body.teamCode,
@@ -161,6 +156,12 @@ app.post('/login', async (req, res) => {
     const authResult = await authenticateUser(userData,req,res);
 
     if (authResult.success) {
+        // const loginTeamData = await teamData.findOne({team:userData.teamCode})
+        // //console.log(loginTeamData);
+        // const list= await questionBank.find({})
+        // const newList=list.filter(question=>question.owner!=null)
+        // res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+
         res.redirect('./home')
     }
     else {
@@ -203,6 +204,11 @@ app.post('/hostLogin', async (req, res) => {
     }
 })
 
+
+
+
 server.listen(3000, () => {
+
     console.log("app started at port 3000");
 })
+
