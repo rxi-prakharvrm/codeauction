@@ -22,7 +22,7 @@ body {
   background: linear-gradient(to right, #2b4162, #041046, #2b4162);
 }
 
-.bidding-start-pop-up {
+.pop-up {
     padding: 3rem;
     position: fixed;
     font-size: 2.4rem;
@@ -30,7 +30,7 @@ body {
     color: #09102F;
     background-color: #d9d9d9;
     top: 0;
-    left: 68%;
+    left: 50%;
     transform: translateX(-50%);
     display: none;
     justify-content: center;

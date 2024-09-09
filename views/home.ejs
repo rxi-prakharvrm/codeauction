@@ -10,8 +10,8 @@
 
 <body>
   <!-- Header  -->
-  <div class="bidding-start-pop-up">
-    <p>Bidding Started</p>
+  <div class="pop-up">
+    PopUp text here
   </div>
 
   <div class="header">
@@ -153,10 +153,12 @@
 
     const curr_bid_team = document.querySelector('.curr-bid-team')
 
-    const biddingStartPopUp = document.querySelector(".bidding-start-pop-up");
+    const biddingStartPopUp = document.querySelector(".pop-up");
 
-    function showPopUp() {
+    function showPopUp(message, time) {
+      biddingStartPopUp.innerHTML = message;
       biddingStartPopUp.style.display = "flex";
+      setTimeout(hidePopUp, time);
     }
 
     function hidePopUp() {
@@ -177,8 +179,8 @@
     socket.on("question", (titleServer, descServer, tagServer) => {
 
       enableBidBtn();
-      showPopUp();
-      setTimeout(hidePopUp, 2000);
+      showPopUp("Bidding Started", 2000);
+     
 
       console.log(tagServer, descServer, tagServer);
 
@@ -188,7 +190,7 @@
       currBidAmount.innerHTML = '0'
       curr_bid_team.innerHTML = ''
       function startCountdown() {
-        let countdown = 120;
+        let countdown = 20;
         timer.innerHTML = countdown;
 
         let countDownTimer = setInterval(() => {
@@ -233,6 +235,8 @@
       if (Number(inputBid) > Number(curr) && Number(inputBid) <= user_points) {
         console.log("sending bid");
         socket.emit("bid", "<%=userData.teamCode %>", inputBid);
+      }else{
+        showPopUp("Invalid Bid", 2000)
       }
     });
 
@@ -256,9 +260,13 @@
               </div>`
 
       if (bidData_teamCode == '<%=userData.teamCode %>') {
+        showPopUp(`Congratulations!! on your successful bid of ${bidData_amount}`, 5000)
         user_points -= Number(bidData_amount);
         console.log('user points are', user_points);
         purse_points.innerHTML = user_points
+      }
+      else{
+        showPopUp(`Problem allocated to ${bidData_teamCode} for amount ${bidData_amount}`, 5000)
       }
     })
   </script>
