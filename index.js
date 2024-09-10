@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
         io.emit('question', title, desc, tag);
     })
 
+    //handles live bidding 
     socket.on('bid', (teamCode, amount) => {
         
         if (Number(amount) > bidData.amount) {
@@ -59,6 +60,7 @@ io.on('connection', (socket) => {
         }
     })
 
+    //handles if host aborts the current bid 
     socket.on("abortCurrBid", () => {
         var title = 'Waiting for problem...';
         var points = null
@@ -71,25 +73,18 @@ io.on('connection', (socket) => {
         io.emit("timeIsUp");
     })
 
+    //sending the latest bid info to all users  
     socket.on('update-user-data', async () => {
-        console.log("1");
         await questionBank.updateOne({ index: bidData.index}, { $set: { owner: bidData.teamCode } })
-        const list= await questionBank.find({})
-        // const newList=list.filter(question=>question.owner!=null)
-     
-        try {
-            console.log("2");
-            const team_Data=await teamData.findOne({team:bidData.teamCode})
 
-          
+        try {
+            const team_Data=await teamData.findOne({team:bidData.teamCode})
             if (team_Data) {
-               
                 const updated = await teamData.updateOne({ team: bidData.teamCode }, {
                     $set: { points: Number(team_Data.points) - Number(bidData.amount)},
                     $push: { questions: bidData.title }
                 })
-                console.log("3");
-                //getting all team vs points        
+                
                 io.emit('updateInfo',bidData.title,bidData.teamCode,bidData.amount)
             }
         }
@@ -142,8 +137,6 @@ app.post('/signUp', async (req, res) => {
 
 })
 
-// let teamCode;
-
 app.get('/login',(req,res)=>{
     res.sendFile(__dirname + '/public/login.html');
 })
@@ -156,12 +149,6 @@ app.post('/login', async (req, res) => {
     const authResult = await authenticateUser(userData,req,res);
 
     if (authResult.success) {
-        // const loginTeamData = await teamData.findOne({team:userData.teamCode})
-        // //console.log(loginTeamData);
-        // const list= await questionBank.find({})
-        // const newList=list.filter(question=>question.owner!=null)
-        // res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
-
         res.redirect('./home')
     }
     else {
@@ -203,8 +190,6 @@ app.post('/hostLogin', async (req, res) => {
         res.send(authResult.message)
     }
 })
-
-
 
 
 server.listen(3000, () => {
