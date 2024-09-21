@@ -11,8 +11,7 @@ const io = new Server(server)
 
 io.setMaxListeners(0); // Set maximum listeners to unlimited
 
-
-const { userData, hostData, questionBank, teamData } = require('./src/mongodb')
+const { userData, questionBank, teamData } = require('./src/mongodb')
 const { authenticateUser } = require('./src/logic/authenticateUser')
 const { authenticateHost } = require('./src/logic/authenticateHost')
 const { validUsername } = require('./src/logic/validUsername')
@@ -44,23 +43,21 @@ io.on('connection', (socket) => {
             desc = question.desc
             bidData.title = title
         }
-     
 
         io.emit('question', title, desc, tag);
     })
 
-    //handles live bidding 
+    // Handling live bidding
     socket.on('bid', (teamCode, amount) => {
-        
         if (Number(amount) > bidData.amount) {
             bidData.teamCode = teamCode;
             bidData.amount = amount
-          
+
             io.emit('currBidData', bidData.teamCode, bidData.amount);
         }
     })
 
-    //handles if host aborts the current bid 
+    // Handles if host aborts the current bid 
     socket.on("abortCurrBid", () => {
         var title = 'Waiting for problem...';
         var points = null
@@ -73,28 +70,25 @@ io.on('connection', (socket) => {
         io.emit("timeIsUp");
     })
 
-    //sending the latest bid info to all users  
+    // Sending the latest bid info to all users  
     socket.on('update-user-data', async () => {
-        await questionBank.updateOne({ index: bidData.index}, { $set: { owner: bidData.teamCode } })
+        await questionBank.updateOne({ index: bidData.index }, { $set: { owner: bidData.teamCode } })
 
         try {
-            const team_Data=await teamData.findOne({team:bidData.teamCode})
+            const team_Data = await teamData.findOne({ team: bidData.teamCode })
             if (team_Data) {
                 const updated = await teamData.updateOne({ team: bidData.teamCode }, {
-                    $set: { points: Number(team_Data.points) - Number(bidData.amount)},
+                    $set: { points: Number(team_Data.points) - Number(bidData.amount) },
                     $push: { questions: bidData.title }
                 })
-                
-                io.emit('updateInfo',bidData.title,bidData.teamCode,bidData.amount)
+
+                io.emit('updateInfo', bidData.title, bidData.teamCode, bidData.amount)
             }
         }
         catch (err) {
             console.log("server side error")
         }
-
     })
-
-
 })
 
 app.get('/', (req, res) => {
@@ -119,16 +113,15 @@ app.post('/signUp', async (req, res) => {
 
     const check = await validUsername(data)
     if (check.success) {
-        
-        try{
-            const hashedPassword = await bcrypt.hash(data.password,10)
+        try {
+            const hashedPassword = await bcrypt.hash(data.password, 10)
             data.password = hashedPassword
-        }catch(error){
-            res.json({msg:"error hashing password"})
+        } catch (error) {
+            res.json({ msg: "error hashing password" })
         }
 
         await userData.insertMany([data])
-        await teamData.insertMany({team:data.teamCode})
+        await teamData.insertMany({ team: data.teamCode })
         res.sendFile(__dirname + '/public/login.html');
     }
     else {
@@ -137,16 +130,17 @@ app.post('/signUp', async (req, res) => {
 
 })
 
-app.get('/login',(req,res)=>{
+app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/public/login.html');
 })
+
 app.post('/login', async (req, res) => {
     const userData = {
         teamCode: req.body.teamCode,
         username: req.body.username,
         password: req.body.password
     }
-    const authResult = await authenticateUser(userData,req,res);
+    const authResult = await authenticateUser(userData, req, res);
 
     if (authResult.success) {
         res.redirect('./home')
@@ -156,20 +150,19 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.get('/logout',(req,res)=>{
+app.get('/logout', (req, res) => {
     res.clearCookie('token')
 
     res.redirect('/login')
 })
 
-app.get('/home',verifyUser, async (req,res)=>{
+app.get('/home', verifyUser, async (req, res) => {
+    const userData = req.user
+    const loginTeamData = await teamData.findOne({ team: userData.teamCode })
 
-    const  userData = req.user
-    const loginTeamData = await teamData.findOne({team:userData.teamCode})
-
-    const list= await questionBank.find({})
-    const newList=list.filter(question=>question.owner!=null)
-    res.render('home', {userData:userData,points:loginTeamData.points,titleOwner:newList})
+    const list = await questionBank.find({})
+    const newList = list.filter(question => question.owner != null)
+    res.render('home', { userData: userData, points: loginTeamData.points, titleOwner: newList })
 
 })
 
@@ -193,7 +186,6 @@ app.post('/hostLogin', async (req, res) => {
 
 
 server.listen(3000, () => {
-
     console.log("app started at port 3000");
 })
 
